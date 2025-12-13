@@ -1,0 +1,46 @@
+.common-padding{
+    padding: 100px 0;
+}
+
+.common-text {
+    h1{
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-semiBold;
+        line-height: 68px;
+        color: $color-heading;
+        margin-bottom: 25px;
+    }
+    h2{
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semiBold;
+        line-height: 60px;
+        color: $color-heading;
+        margin-bottom: 25px;
+        text-transform: capitalize;
+    }
+
+    p{
+        font-size: $font-size-s;
+        font-weight: $font-weight-normal;
+        line-height: 26px;
+        color: $color-content;
+        margin: 0;
+        padding-bottom: 15px !important;
+        &:last-of-type{
+            padding-bottom: 0 !important;
+        }
+    }
+
+    
+}
+
+.petit-text{
+    font-family: $font-family-Petit !important;
+    font-weight: $font-weight-normal;
+    font-size: 22px;
+    line-height: 24px;
+    letter-spacing: 4%;
+    color: $color-yellow;
+    margin-bottom: 15px;
+
+}

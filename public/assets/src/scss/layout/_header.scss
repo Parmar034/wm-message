@@ -1,0 +1,89 @@
+
+/************************************* Header ***********************************/
+.header{
+    padding: 30px 0;
+    background-color: $color-white;
+    border-top: 2px solid $color-yellow;
+
+    .menu{text-align: right;
+    
+        .navbar{display: inline-block;
+            padding: 0;
+
+            ul{display: inline-block;
+                padding: 0;
+                margin: 0;
+            
+                li{
+                    line-height: none;
+                    display: inline-block;
+                    font-size: $font-size-s;
+                    font-weight: $font-weight-medium;
+                    color: $color-black;
+                    padding-right: 16px !important;
+                    line-height: 19px;
+
+
+                    
+
+                    a{
+
+                        &:hover{
+                            color: $color-yellow;
+                        }
+                    }
+
+                    
+                }
+                .active{
+                    color: $color-yellow;
+                }
+                
+            }
+            
+        }
+        
+    }
+    .header-buttons{
+        text-align: right;
+        padding-left: 0;
+        display: flex;
+
+        .common-btn{
+            margin: 0;
+            padding: 15px 20px;
+
+        }
+        .common-btn.header-btn-1{
+            margin-right: 18px;
+        }
+
+        
+    }
+
+    .mobile-toggle-sec{
+        display: none;
+    }
+    .mobile-logo-sec{
+        display: none;
+    }
+    .mobile-header-buttons{
+        display: none;
+    }
+
+    .contact-btn{display: none;}
+
+
+
+
+
+}
+
+.sticky{
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    display: block;
+    width:100%;
+    box-shadow: 0px 7px 6px #9795953b;
+}

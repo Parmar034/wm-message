@@ -1,0 +1,21 @@
+.randy-stratton{
+    h4{
+        position: relative;
+        &::before{content: ""; width: 22%; display: inline-block; height: 1px; margin: 0 auto; background-color: $color-yellow; position: absolute; bottom: 0; left: -145px;}
+    }
+    p{
+        padding-bottom: 15px;
+
+        &:last-of-type{
+            padding-bottom: 0;
+        }
+    }
+
+    .common-btn{
+        background-color: $color-white;
+
+        &:hover{
+            background-color: $color-yellow;
+        }
+    }
+}

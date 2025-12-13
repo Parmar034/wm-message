@@ -1,0 +1,166 @@
+.about-sec{
+
+    background-color: $bg-color-same;
+
+    .about-content{
+
+   
+    h4{
+        color: $color-heading;
+        font-family: 'Yellowtail' !important;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-normal;
+        line-height: 48px;
+
+        &::after{
+            content: ""; width: 115px; display: block; height: 1px; margin: 15px 0 40px; background-color: $color-yellow;
+        }
+
+    }
+
+    
+    p{
+        padding-bottom: 15px;
+
+        &:nth-child(2){
+            padding-bottom: 25px !important;
+        }
+
+        &:last-of-type{
+            padding-bottom: 0;
+        }
+    }
+}
+    p{
+        padding-bottom: 15px;
+        &:last-of-type{
+            padding-bottom: 0;
+        }
+    }
+
+    .next-row{
+        padding: 100px 0 0;
+
+        h3{
+            font-weight: $font-weight-medium;
+            font-size: 35px;
+            line-height: 42px;
+            margin-bottom: 25px !important;
+        }
+    }
+
+}
+
+.quiet-msg{
+    text-align: center;
+
+    img{
+        margin-bottom: 50px !important;
+    }
+
+    p{
+        font-size: 35px;
+        line-height: 55px;
+        padding: 0 120px;
+
+        &::after{
+            content: ""; width: 84px; display: block; height: 1px; margin: 60px auto 0; background-color: $color-black;
+        }
+    }
+}
+
+.our-philosophy{
+    background-color: $bg-color-same;
+
+    .content{
+        padding-right: 120px;
+    }
+
+    .img-sec{
+        position: relative;
+
+        .img-bg-white-sec{
+
+            position: absolute;
+            background-color: #fff;
+            height: 443px;
+            width: 505px;
+            padding: 15px 0;
+            left: -35px;
+
+            h4{
+                color: $color-content;
+                line-height: 28px;
+                text-align: right;
+                &::after{
+                    content: ""; width: 170px; display: inline-block; height: 1px; margin: 6px 0 6px 20px; background-color: $color-content;
+                }
+                &::before{
+                    content: ""; width: 170px; display: inline-block; height: 0.1px; margin: 0; background-color: #333333; position: absolute; bottom: 84px; left: -58px; transform: rotate(90deg);
+                }
+        
+            }
+
+        }
+
+        img{
+            position: relative;
+            top: 56px;
+        }
+    }
+    
+}
+
+
+
+.our-vision{
+
+    p{
+        padding-right: 10px !important;
+    }
+
+    .content{
+        padding-left: 80px;
+    }
+
+    .img-sec{
+        position: relative;
+
+        .img-bg-white-sec{
+
+            position: absolute;
+            background-color: #F7FBFC80;
+            height: 443px;
+            width: 584px;
+            padding: 15px 0;
+            right: 12px;
+
+            h4{
+                color: $color-content;
+                line-height: 28px;
+                text-align: right;
+                &::after{
+                    content: ""; width: 165px; display: inline-block; height: 1px; margin: 6px 0 6px 20px; background-color: $color-content;
+                }
+                // &::before{
+                //     content: ""; width: 170px; display: inline-block; height: 0.1px; margin: 0; background-color: #333333; position: absolute; bottom: 84px; right: -58px; transform: rotate(90deg);
+                // }
+        
+            }
+
+        }
+
+        img{
+            position: relative;
+            top: 56px;
+        }
+    }
+    
+}
+
+.about-testimonial{background-color: $bg-color-same;}
+.about-from-sec{background-image: url(../images/about-form-bg.png); }
+
+
+
+

@@ -1,0 +1,11 @@
+@mixin same-form-field(){
+    background-color: $color-white;
+    border: 1px solid #DDD7C2;
+    padding: 11px 15px;
+    font-size: $font-size-s;
+    font-weight: $font-weight-normal;
+    line-height: 26px;
+    width: 100%;
+    outline: 0;
+    color: #a8a8a8;
+}

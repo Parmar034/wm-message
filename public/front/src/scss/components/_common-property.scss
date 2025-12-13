@@ -1,0 +1,12 @@
+/*********** Common Text ***********/
+
+.number-text{font-family: 'Yrsa';}
+.common-padding{padding: 50px 0;}
+.common-section h2{font-size: 50px; font-weight: 400; line-height: 64.65px; color: var(--theme-color);text-align: center;margin-bottom: 43px;    text-transform: uppercase;}
+.common-section .view-all{font-size: 20px; font-weight: 400; line-height: 25.86px; text-align: center;text-transform: uppercase;margin-bottom: 50px;}
+.owl-carousel .owl-nav .owl-prev{position: absolute; left: -20px; top: 50%; background-color: transparent !important;padding: 0 !important; margin: 0 !important;transform: translate(0px, -50%);}
+.owl-carousel .owl-nav .owl-next{position: absolute; right: -20px; top: 50%; background-color: transparent !important;padding: 0 !important; margin: 0 !important;transform: translate(0px, -50%);}
+.owl-carousel .owl-dots{display: none !important;}
+.owl-carousel{justify-content: center; display: flex !important;}
+.common-section .view-all:hover{color: var(--theme-color);}
+.common-section p{font-family: 'Baskervville'; font-size: 16px; font-weight: 400; line-height: 20px; }

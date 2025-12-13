@@ -1,0 +1,21 @@
+.most-popular-section h2{margin-bottom: 10px;}
+
+/* Home page Product box CSS   */
+
+.product-box-section .product-images img{width: 100%; height: 275px; object-fit: cover;background-color: #F5F5F5; border: 1px solid #e5e5e5db;}
+.product-box-section .product-details-section{padding: 20px 8px;}
+.product-box-section .product-details-section h3{font-size: 16px; font-weight: 400; line-height: 20px; text-align: left;margin-bottom: 20px;text-transform: capitalize; color: var(--theme-dark-color);}
+.product-box-section .product-details-section .price-and-gram{ display: flex; align-items: center; justify-content: space-between;margin-bottom: 8px;}
+.product-box-section .product-details-section .price-and-gram span.price, .product-box-section .product-details-section .price-and-gram span.gram{ font-size: 22px; font-weight: 400; line-height: 20px;color: var(--theme-color); }
+.product-box-section .product-details-section .price-and-gram span.discount-price{font-size: 14px; font-weight: 400; line-height: 17.05px;color: var(--gray); margin-top: 5px;    text-decoration: line-through;}
+.product-box-section .product-details-section .product-action-section{display: flex; align-items: center; justify-content: space-between;}
+.product-box-section .product-details-section .product-action-section span.shop-now-span{ font-size: 16px; font-weight: 400; line-height: 20px; color: var(--theme-dark-color); text-transform: uppercase;}
+.product-box-section article:hover{box-shadow: 0 0 9.84px 0 rgba(0,0,0,.1);}
+.product-box-section article{margin: 5px; transition: ease-in-out 0.4s;}
+.product-box-section .product-details-section .price-and-gram div{display: flex; flex-direction: column;}
+
+
+.product-box-section .product-details-section h3{margin-bottom: 0 !important; height: 40px;}
+.product-box-section .product-details-section .price-and-gram{height: 40px;}
+
+.product-box-section .product-details-section .product-action-section .mobile-show-now{display: none !important;}

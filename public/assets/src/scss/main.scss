@@ -1,0 +1,775 @@
+@import "abstracts/fonts";
+@import "abstracts/variable";
+@import "abstracts/mixin";
+@import "components/basic";
+@import "components/button";
+@import "components/common-property";
+@import "components/responsive";
+@import "layout/header";
+@import "layout/banner";
+@import "layout/celebrate-wedding-sec";
+@import "layout/copyright";
+@import "layout/footer";
+@import "layout/from-sec";
+@import "layout/how-to-get-married";
+@import "layout/our-gallery";
+@import "layout/randy-stratton";
+@import "layout/recent-posts";
+@import "layout/services-sec";
+@import "layout/testimonial";
+@import "layout/the-story";
+@import "layout/wedding-ceremony";
+@import "layout/about-page";
+@import "layout/services_page1";
+@import "layout/services_page2";
+
+
+
+/************************************* Responsive ***********************************/
+
+@media (max-width: 575.98px){
+
+    // .logo img,.header .header-buttons{display: none;}
+    .header .mobile-toggle-sec { display: flex; align-items: center; justify-content: space-between; padding: 0; z-index: 999999; position: relative;}
+    .header .mobile-logo-sec, .header .mobile-header-buttons{display: inline-block;text-align: center;}
+    .header .menu{position: fixed; right: 0; top: 0; bottom: 0; background-color: $color-white; transform: translateX(-101%); transition: all .5s ease; width: 100%; padding: 30px 0px; z-index: 99999; overflow-x: hidden;}
+    .header .menu.show { transition: all .5s ease; transform: translateX(0); }
+
+    .header .header-buttons { text-align: center; padding-left: 12px; display: flex; justify-content: center; }
+
+    // .header .mobile-logo-sec img{width: 70%;}
+    .header{padding: 10px 0 20px;    border-top: 0;}
+    .header .logo{display: flex; justify-content: space-between;margin-bottom: 20px;background-color: $color-white;padding: 10px 12px;}
+    .header .menu-toggle i { font-size: 26px; color: $color-black; }
+
+    .header .menu .navbar ul li{display: block;padding-right: 0px !important;}
+    .header .menu .navbar ul { display: block;padding-top: 30px !important;}
+    .header .menu { text-align: left; }
+    .header .menu .navbar ul li a:hover{color: $color-white;}
+    .header .menu .navbar ul li a{padding: 12px;}
+    .header .menu .navbar{display: block;width: 100%;}
+    .header .common-btn{margin-top: 0;}
+
+
+    .how-to-get-married .text-center p { padding: 0 0px; }
+
+    .header .header-buttons .quote-btn{display: none;}
+    .header .header-buttons .contact-btn{display: block;}
+    .navbar-toggler{ border: 1px solid #000 !important; padding: 2px 5px !important;}
+
+    .header .header-buttons .common-btn{ padding: 15px 20px; font-size: 14px;}
+
+    
+
+
+    .common-btn{padding: 10px 10px; font-size: 12px;margin-top: 30px;}
+    .common-btn:hover { background-color: transparent; color: $color-yellow; }
+    .petit-text{font-size: 18px; line-height: 22px;margin-bottom: 5px;}
+    .common-text h1{font-size: 38px;line-height: 48px;}
+    .common-padding { padding: 40px 0; }
+    .common-text h2{font-size: 30px;line-height: 40px;margin-bottom: 15px;}
+    .common-text p{font-size: 14px;line-height: 24px;}
+
+
+    .banner-sec p { padding-right: 0; }
+    // .banner-sec .carousel-control-next { left: 14%; }
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 5%;}
+    .banner-sec .carousel-control-prev { left: 20px; }
+    .banner-sec{height: auto;background-position: -660px;}
+    .banner-sec .slider img { height: auto; width: 100%; object-fit: unset; }
+    .banner-sec .left-right-controls{    bottom: 86px;}
+    .banner-sec .carousel-control-next { left: 0%; margin-left: 55px; }
+    .banner-sec .slider .slider-content{top: 50%;}
+
+    .banner-sec .slider .mobile-banner { display: block; }
+    .banner-sec .slider .desktop-banner { display: none; }
+
+
+    .randy-stratton img{margin-bottom: 30px !important;}
+    .randy-stratton h4::before{display: none;}
+
+
+    .services-sec .next-row { padding-top: 0; }
+    .services-sec .inner-box{padding-top: 30px;}
+    .services-sec .inner-box article { height: auto; background-position: top center; background-repeat: no-repeat; background-size: cover; }
+
+    .the-story .right-sec article.d-flex{display: block !important;padding: 0; margin-top: 30px;}
+    .the-story .right-sec h4{padding: 20px 0px; margin-bottom: 0;}
+    .the-story .right-sec h5{margin-top: 20px; margin-bottom: 20px;}
+    .the-story .right-sec::after{display: none;}
+
+    .testimonial-sec{padding: 40px 0 70px;}
+    .testimonial-sec .testimonial-content .client-comment p{font-size: 18px;line-height: 32px;}
+    .testimonial-sec .testimonial-content .client-details .name-details h5{font-size: 17px;line-height: 23px;}
+    .testimonial-sec .testimonial-content .client-details .name-letter { margin-right: 10px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p img { margin-left: 5px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p{font-size: 12px;}
+    .testimonial-sec .testimonial-content .carousel-control-next { right: 80%; }
+    .testimonial-sec .testimonial-content .carousel-control-next, .testimonial-sec .testimonial-content .carousel-control-prev{bottom: -35px;}
+    .testimonial-sec .testimonial-content{padding: 20px 0 0;}
+
+    .wedding-ceremony{margin-bottom: 0;}
+    .wedding-ceremony .video-sec{position: relative;}
+    .wedding-ceremony .video-sec img.main-img{position: relative;}
+    .wedding-ceremony .video-sec .on-hover { position: relative; height: auto; width: auto; top: -90px; left: 44%; }
+    .wedding-ceremony .video-sec .on-hover img {  top: 0; right: 0; left: 0; width: 10%;    display: block; }
+    .wedding-ceremony .video-sec #myVideo{height: auto; width: 100%;    position: relative;}
+
+    .how-to-get-married .inner-box:nth-child(2) {padding-top: 100px;}
+    .how-to-get-married .inner-box article{padding: 70px 15px 40px;}
+    .how-to-get-married .inner-box article .common-btn{margin-top: 30px;}
+    .how-to-get-married .inner-box article h3 { font-size: 21px; margin-bottom: 15px; line-height: 28px; }
+    .how-to-get-married .inner-box article ul li { font-size: 12px;}
+
+    .our-gallery figure h4{right: 26%;}
+    // .our-gallery .modal .modal-content{    padding: 10px;width: 91%;}
+    .mfp-zoom-out-cur img.mfp-img { height: auto !important;}
+
+    .from-sec .form-content{padding: 20px;}
+    .from-sec .form-content h2 { font-size: 25px; }
+    .from-sec .form-content p{font-size: 13px;line-height: 21px;}
+    .from-sec .form-content form { padding-top: 30px; }
+    .from-sec .form-content form select{background-position: 255px center;}
+
+    .recent-posts .owl-controls .owl-nav{top: -36px;}
+    .recent-posts .post-item .post-content h3{font-size: 18px;line-height: 24px;}
+    .recent-posts .post-item .post-content ul { display: block; }
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 15px; }
+
+    .footer { padding: 40px 0;}
+    .footer .link-text{padding-top: 40px;}
+    .footer .contact-footer{padding: 40px 12px 0;}
+    .footer .map-img { padding-left: 12px; padding-top: 30px; }
+
+    .copyright p { font-size: 12px; line-height: 22px;}
+
+
+
+
+    /******************* About Page *******************/
+
+    .about-sec .about-content h4{font-size: 38px;line-height: 38px;}
+    .about-sec .about-content h4::after{margin: 15px 0 30px;}
+    .about-sec .about-content p:nth-child(2){padding-bottom: 15px !important;}
+    .about-sec img{margin-top: 30px;}
+    .about-sec .next-row { padding: 0px 0 0; }
+    .about-sec .inner-col{padding: 40px 12px 0;}
+    .about-sec .next-row h3 {font-size: 28px; line-height: 34px; margin-bottom: 15px !important; }
+
+    .quiet-msg p{padding: 0;}
+
+    .our-philosophy .content { padding-right: 12px; }
+    .our-philosophy .img-sec img{top: 0;width: 100%;}
+    .our-philosophy .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;left: 0;}
+    .our-philosophy .img-sec{padding-top: 40px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;font-size: 16px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::before{position: relative; bottom: 0; left: 0; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+    .our-vision .content { padding-left: 12px; }
+    .our-vision .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;right: 0;}
+    .our-vision .img-sec img{top: 0;width: 100%;}
+    .our-vision .img-sec{padding-bottom: 40px;}
+    .our-vision .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;text-align: center;font-size: 16px;}
+    .our-vision .img-sec .img-bg-white-sec h4::before{content: ""; display: inline-block; height: 1px;background-color: $color-content; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-vision .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+
+    /******************* Services Page *******************/
+    
+    .services-banner-sec .banner-content { padding-top: 0; }
+    .services-banner-sec p { padding-right: 0; }
+    .services-banner-sec img{margin-top: 30px;}
+    .services-banner-sec .next-row .left-content { padding-top: 40px; padding-right: 12px; }
+    .services-banner-sec .next-row .right-content { padding-top: 40px; }
+    .services-banner-sec .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-banner-sec .next-row article.next-article { padding-top: 40px; }
+
+
+    .services-banner-sec2 p { padding-right: 0; }
+    .services-content .next-row .left-content { padding-right: 10px; }
+    .services-content .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-content .next-row article.next-article { padding-top: 40px; }
+    .services-content .next-row .right-content { padding-top: 40px; }
+
+
+} 
+
+@media (max-width: 767.98px ) and (orientation: landscape){
+    // .logo img,.header .header-buttons{display: none;}
+    .header .mobile-toggle-sec { display: flex; align-items: center; justify-content: space-between; padding: 0; z-index: 999999; position: relative;}
+    .header .mobile-logo-sec, .header .mobile-header-buttons{display: inline-block;text-align: center;}
+    .header .menu{position: fixed; right: 0; top: 0; bottom: 0; background-color: $color-white; transform: translateX(-101%); transition: all .5s ease; width: 100%; padding: 30px 0px; z-index: 99999; overflow-x: hidden;}
+    .header .menu.show { transition: all .5s ease; transform: translateX(0); }
+
+    .header .header-buttons { text-align: center; padding-left: 12px; display: flex; justify-content: center; }
+
+    // .header .mobile-logo-sec img{width: 70%;}
+    .header{padding: 10px 0 20px;    border-top: 0;}
+    .header .logo{display: flex; justify-content: space-between;margin-bottom: 20px;background-color: $color-white;padding: 10px 12px;}
+    .header .menu-toggle i { font-size: 26px; color: $color-black; }
+
+    .header .menu .navbar ul li{display: block;padding-right: 0px !important;}
+    .header .menu .navbar ul { display: block;padding-top: 30px !important;}
+    .header .menu { text-align: left; }
+    .header .menu .navbar ul li a:hover{color: $color-white;}
+    .header .menu .navbar ul li a{padding: 12px;}
+    .header .menu .navbar{display: block;width: 100%;}
+    .header .common-btn{margin-top: 0;}
+
+
+    .how-to-get-married .text-center p { padding: 0 0px; }
+
+    .header .header-buttons .quote-btn{display: none;}
+    .header .header-buttons .contact-btn{display: block;}
+    .navbar-toggler{ border: 1px solid #000 !important; padding: 2px 5px !important;}
+
+    .header .header-buttons .common-btn{ padding: 15px 20px; font-size: 14px;}
+
+
+
+    .common-btn{padding: 10px 10px; font-size: 12px;margin-top: 30px;}
+    .common-btn:hover { background-color: transparent; color: $color-yellow; }
+    .petit-text{font-size: 18px; line-height: 22px;margin-bottom: 5px;}
+    .common-text h1{font-size: 38px;line-height: 48px;}
+    .common-padding { padding: 40px 0; }
+    .common-text h2{font-size: 30px;line-height: 40px;margin-bottom: 15px;}
+    .common-text p{font-size: 14px;line-height: 24px;}
+
+
+    .banner-sec p { padding-right: 0; }
+    // .banner-sec .carousel-control-next { left: 14%; }
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 5%;}
+    .banner-sec .carousel-control-prev { left: 20px; }
+    .banner-sec{height: auto;background-position: -660px;}
+    .banner-sec .slider img { height: 520px; width: 100%; object-fit: cover; }
+    .banner-sec .left-right-controls{    bottom: 86px;}
+
+    .randy-stratton img{margin-bottom: 30px !important;}
+    .randy-stratton h4::before{display: none;}
+
+
+    .services-sec .next-row { padding-top: 0; }
+    .services-sec .inner-box{padding-top: 30px;}
+    .services-sec .inner-box article { height: auto; background-position: top center; background-repeat: no-repeat; background-size: cover; }
+
+    .the-story .right-sec article.d-flex{display: block !important;padding: 0; margin-top: 30px;}
+    .the-story .right-sec h4{padding: 20px 0px; margin-bottom: 0;}
+    .the-story .right-sec h5{margin-top: 20px; margin-bottom: 20px;}
+    .the-story .right-sec::after{display: none;}
+
+    .testimonial-sec{padding: 40px 0 70px;}
+    .testimonial-sec .testimonial-content .client-comment p{font-size: 18px;line-height: 32px;}
+    .testimonial-sec .testimonial-content .client-details .name-details h5{font-size: 17px;line-height: 23px;}
+    .testimonial-sec .testimonial-content .client-details .name-letter { margin-right: 10px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p img { margin-left: 5px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p{font-size: 12px;}
+    .testimonial-sec .testimonial-content .carousel-control-next { right: 80%; }
+    .testimonial-sec .testimonial-content .carousel-control-next, .testimonial-sec .testimonial-content .carousel-control-prev{bottom: -35px;}
+    .testimonial-sec .testimonial-content{padding: 20px 0 0;}
+
+    .wedding-ceremony{margin-bottom: 0;}
+    .wedding-ceremony .video-sec{position: relative;}
+
+    .how-to-get-married .inner-box:nth-child(2) {padding-top: 100px;}
+    .how-to-get-married .inner-box article{padding: 70px 15px 40px;}
+    .how-to-get-married .inner-box article .common-btn{margin-top: 30px;}
+    .how-to-get-married .inner-box article h3 { font-size: 21px; margin-bottom: 15px; line-height: 28px; }
+    .how-to-get-married .inner-box article ul li { font-size: 12px;}
+
+    .our-gallery figure h4{right: 26%;}
+    // .our-gallery .modal .modal-content{    padding: 10px;width: 91%;}
+    .mfp-zoom-out-cur img.mfp-img { height: auto !important;}
+
+    .from-sec .form-content{padding: 20px;}
+    .from-sec .form-content h2 { font-size: 25px; }
+    .from-sec .form-content p{font-size: 13px;line-height: 21px;}
+    .from-sec .form-content form { padding-top: 30px; }
+    .from-sec .form-content form select{background-position: 500px center;}
+
+    .recent-posts .owl-controls .owl-nav{top: -36px;}
+    .recent-posts .post-item .post-content h3{font-size: 18px;line-height: 24px;}
+    .recent-posts .post-item .post-content ul { display: block; }
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 15px; }
+
+    .footer { padding: 40px 0;}
+    .footer .link-text{padding-top: 40px;}
+    .footer .contact-footer{padding: 40px 12px 0;}
+    .footer .map-img { padding-left: 12px; padding-top: 30px; }
+
+    .copyright p { font-size: 12px; line-height: 22px;}
+
+
+
+    /******************* About Page *******************/
+
+    .about-sec .about-content h4{font-size: 38px;line-height: 38px;}
+    .about-sec .about-content h4::after{margin: 15px 0 30px;}
+    .about-sec .about-content p:nth-child(2){padding-bottom: 15px !important;}
+    .about-sec img{margin-top: 30px;}
+    .about-sec .next-row { padding: 0px 0 0; }
+    .about-sec .inner-col{padding: 40px 12px 0;}
+    .about-sec .next-row h3 {font-size: 28px; line-height: 34px; margin-bottom: 15px !important; }
+    
+    .quiet-msg p{padding: 0;}
+    
+    .our-philosophy .content { padding-right: 12px; }
+    .our-philosophy .img-sec img{top: 0;width: 100%;}
+    .our-philosophy .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;left: 0;}
+    .our-philosophy .img-sec{padding-top: 40px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;font-size: 16px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::before{position: relative; bottom: 0; left: 0; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+    
+    .our-vision .content { padding-left: 12px; }
+    .our-vision .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;right: 0;}
+    .our-vision .img-sec img{top: 0;width: 100%;}
+    .our-vision .img-sec{padding-bottom: 40px;}
+    .our-vision .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;text-align: center;font-size: 16px;}
+    .our-vision .img-sec .img-bg-white-sec h4::before{content: ""; display: inline-block; height: 1px;background-color: $color-content; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-vision .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+
+    /******************* Services Page *******************/
+    
+    .services-banner-sec .banner-content { padding-top: 0; }
+    .services-banner-sec p { padding-right: 0; }
+    .services-banner-sec img{margin-top: 30px;}
+    .services-banner-sec .next-row .left-content { padding-top: 40px; padding-right: 12px; }
+    .services-banner-sec .next-row .right-content { padding-top: 40px; }
+    .services-banner-sec .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-banner-sec .next-row article.next-article { padding-top: 40px; }
+
+
+    .services-banner-sec2 p { padding-right: 0; }
+    .services-content .next-row .left-content { padding-right: 10px; }
+    .services-content .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-content .next-row article.next-article { padding-top: 40px; }
+    .services-content .next-row .right-content { padding-top: 40px; }
+
+
+
+} 
+
+@media (min-width: 768px) and (max-width: 991.98px){
+
+
+
+
+
+    // .logo img,.header .header-buttons{display: none;}
+    .header .mobile-toggle-sec { display: flex; align-items: center; justify-content: space-between; padding: 0; z-index: 999999; position: relative;}
+    .header .mobile-logo-sec, .header .mobile-header-buttons{display: inline-block;text-align: center;}
+    .header .menu{position: fixed; right: 0; top: 0; bottom: 0; background-color: $color-white; transform: translateX(-101%); transition: all .5s ease; width: 100%; padding: 30px 0px; z-index: 99999; overflow-x: hidden;}
+    .header .menu.show { transition: all .5s ease; transform: translateX(0); }
+
+    .header .header-buttons { text-align: center; padding-left: 12px; display: flex; justify-content: center; }
+
+    // .header .mobile-logo-sec img{width: 70%;}
+    .header{padding: 10px 0 20px;    border-top: 0;}
+    .header .logo{display: flex; margin-bottom: 20px;background-color: $color-white;padding: 10px 12px;justify-content: space-between;}
+    .header .menu-toggle i { font-size: 26px; color: $color-black; }
+
+    .header .menu .navbar ul li{display: block;padding-right: 0px !important;}
+    .header .menu .navbar ul { display: block;padding-top: 30px !important;}
+    .header .menu { text-align: left; }
+    .header .menu .navbar ul li a:hover{color: $color-white;}
+    .header .menu .navbar ul li a{padding: 12px;}
+    .header .menu .navbar{display: block;width: 100%;}
+    .header .common-btn{margin-top: 0;}
+
+
+    .how-to-get-married .text-center p { padding: 0 0px; }
+
+    .header .header-buttons .quote-btn{display: none;}
+    .header .header-buttons .contact-btn{display: block;}
+    .navbar-toggler{ border: 1px solid #000 !important; padding: 2px 5px !important;}
+
+    .header .header-buttons .common-btn{ padding: 15px 20px; font-size: 14px;}
+
+
+    .common-text h1{font-size: 48px;}
+    .common-padding { padding: 50px 0; }
+    .common-text h2{font-size: 38px;line-height: 40px;margin-bottom: 15px;}
+
+
+    .banner-sec p { padding-right: 190px; }
+    // .banner-sec{height: auto;padding: 50px 0 70px;}
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 12%;}
+    .banner-sec .carousel-control-next { right: 91%; }
+    // .banner-sec .carousel-control-next { left: 6%; }
+    .banner-sec .left-right-controls{    bottom: 136px;}
+
+    .randy-stratton .align-items-center { align-items: start !important; }
+    .randy-stratton h4::before{left: -65px;}
+    
+
+    .services-sec .inner-box{padding-top: 30px;}
+    .services-sec .next-row { padding-top: 0; }
+    .services-sec .inner-box article { height: auto; background-position: top center; background-repeat: no-repeat; background-size: cover; }
+
+    .the-story .right-sec article.d-flex{display: block !important;padding: 0; margin-top: 30px;}
+    .the-story .right-sec h4{padding: 20px 0px; margin-bottom: 0;}
+    .the-story .right-sec h5{margin-top: 20px; margin-bottom: 20px;}
+    .the-story .right-sec::after{display: none;}
+
+    .testimonial-sec .testimonial-content .client-comment p{font-size: 17px;  line-height: 27px; padding: 10px 0;}
+    .testimonial-sec .testimonial-content .carousel-control-next, .testimonial-sec .testimonial-content .carousel-control-prev{    bottom: -35px;}
+    .testimonial-sec .testimonial-content .carousel-control-next { right: 85%; }
+    .testimonial-sec{padding: 50px 0 70px;}
+
+    .wedding-ceremony .video-sec{position: relative;}
+    .wedding-ceremony{margin-bottom: 0;}
+    .wedding-ceremony .video-sec img.main-img{    position: relative;}
+    .wedding-ceremony .video-sec .on-hover {top: -180px; left: 45%; }
+    .wedding-ceremony .video-sec #myVideo { position: relative; z-index: 1111; height: auto; width: 100%;}
+
+    .how-to-get-married .text-center p { padding: 0 0px; }
+    .how-to-get-married .inner-box article{padding: 70px 20px 40px;}
+    .how-to-get-married .inner-box article h3 { font-size: 17px; margin-bottom: 15px; line-height: 22px; }
+    .how-to-get-married .inner-box article .btn-2 { margin-top: 70px; }
+
+    .our-gallery figure{margin-top: 12px !important;}
+    .our-gallery figure h4 { font-size: 24px;  top: 39%; right: 30%;}
+
+
+    .from-sec .form-content{padding: 20px;}
+    .from-sec .form-content h2 { font-size: 25px; }
+    .from-sec .form-content p{font-size: 13px;line-height: 21px;}
+    .from-sec .form-content form { padding-top: 30px; }
+    .from-sec .form-content form select{background-position: 300px center;}
+
+    .recent-posts .post-item .post-content h3{font-size: 18px; line-height: 27px;}
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 65px; }
+
+    .footer .contact-footer { padding: 40px 12px 0; }
+    .footer .map-img { padding-left: 12px; padding-top: 40px;}
+    .footer .footer-content p{padding-right: 20px;}
+    .footer { padding: 50px 0;}
+
+    .copyright p { font-size: 12px; line-height: 22px;}
+
+
+    /******************* About Page *******************/
+
+    .about-sec .about-content h4{font-size: 38px;line-height: 38px;}
+    .about-sec .about-content h4::after{margin: 15px 0 30px;}
+    .about-sec .about-content p:nth-child(2){padding-bottom: 15px !important;}
+    .about-sec img{margin-top: 30px;}
+    .about-sec .next-row { padding: 0px 0 0; }
+    .about-sec .inner-col{padding: 40px 12px 0;}
+    .about-sec .next-row h3 {font-size: 28px; line-height: 34px; margin-bottom: 15px !important; }
+    
+    .quiet-msg p{padding: 0;font-size: 25px; line-height: 43px;}
+    
+    .our-philosophy .content { padding-right: 12px; }
+    .our-philosophy .img-sec img{top: 0;}
+    .our-philosophy .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;left: 0;}
+    .our-philosophy .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;font-size: 16px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::before{position: relative; bottom: 0; left: 0; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+    
+    .our-vision .content { padding-left: 12px; }
+    .our-vision .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;right: 0;}
+    .our-vision .img-sec img{top: 0;}
+    .our-vision .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;text-align: center;font-size: 16px;}
+    .our-vision .img-sec .img-bg-white-sec h4::before{content: ""; display: inline-block; height: 1px;background-color: $color-content; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-vision .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+    /******************* Services Page *******************/
+    
+    .services-banner-sec .banner-content { padding-top: 0; }
+    .services-banner-sec p { padding-right: 0; }
+    .services-banner-sec img{margin-top: 30px;}
+    .services-banner-sec .next-row .left-content { padding-top: 40px; padding-right: 12px; }
+    .services-banner-sec .next-row .right-content { padding-top: 40px; }
+    .services-banner-sec .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-banner-sec .next-row article.next-article { padding-top: 40px; }
+
+    .services-banner-sec2 p { padding-right: 0; }
+    .services-content .next-row .left-content { padding-right: 20px; }
+    .services-content .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+
+
+} 
+
+@media (min-width: 992px) and (max-width: 1199.98px){
+
+    .the-story .right-sec h4{    padding: 0;}
+    .the-story .right-sec h5{margin-top: 20px;}
+    // .wedding-ceremony .video-sec{    width: 92%;}
+    .testimonial-sec .testimonial-content .carousel-control-next { right: 89%; }
+    .banner-sec .carousel-control-next { right: 92%; }
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 12%;}
+    .randy-stratton .align-items-center { align-items: start !important; }
+    .randy-stratton h4::before{left: -95px;}
+
+    .header .header-buttons{display: block;}
+    .header .header-buttons .common-btn.header-btn-1 { margin-right: 0; margin-bottom: 0; }
+    .header .header-buttons .common-btn{padding: 11px 1px;}
+    .header .menu .navbar ul li{font-size: 15px;padding-right: 14px !important;}
+
+    .wedding-ceremony .video-sec .on-hover{top: 203px; left: 45%;}
+    .wedding-ceremony .video-sec #myVideo{height: auto; width: 100%;}
+    .wedding-ceremony{padding: 100px 0 250px; margin-bottom: 155px;}
+    
+    .banner-sec .left-right-controls{    bottom: 86px;}
+
+    .from-sec .form-content form select{background-position: 386px center;}
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 21px; }
+
+    .footer .footer-content ul li a{margin-right: 10px;padding: 11px;width: 40px; height: 40px;}
+
+    /******************* About Page *******************/
+
+    .quiet-msg p { font-size: 30px; line-height: 50px; padding: 0 20px; }
+
+    .our-philosophy .img-sec .img-bg-white-sec{height: 333px; width: 375px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::after{width: 130px;}
+    .our-philosophy .content { padding-right: 80px; }
+
+    .our-vision .img-sec .img-bg-white-sec{height: 343px; width: 445px;right: -33px;}
+    .our-vision .img-sec .img-bg-white-sec h4::after{width: 68px;}
+    .our-vision .content { padding-left: 80px; }
+
+    /******************* Services Page *******************/
+
+    .services-banner-sec p { padding-right: 0px; }
+    .services-banner-sec .next-row .left-content { padding-top: 60px; padding-right: 20px; }
+
+    .services-banner-sec2 p { padding-right: 0; }
+    .services-content .next-row .left-content { padding-right: 30px; }
+    
+}  
+
+@media (min-width: 1200px) and (max-width: 1399.98px){
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 71px; }
+    .from-sec .form-content{padding: 30px;}
+    .from-sec .form-content h2{font-size: 26px;margin-bottom: 5px;}
+    .from-sec .form-content form { padding-top: 20px; }
+    .from-sec .form-content form select{background-position: 215px center;}
+    .randy-stratton h4::before{left: -110px;}
+    .header .header-buttons .common-btn { margin: 0; padding: 14px 9px; }
+    // .wedding-ceremony .video-sec{width: 86%;}
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 15%;}
+    .common-text h1 { font-size: 48px;}
+    .banner-sec p { padding-right: 180px; }
+    .the-story .right-sec h4{padding: 20px;}
+    .how-to-get-married .text-center p { padding: 0 210px; }
+
+    .wedding-ceremony .video-sec #myVideo{height: auto; width: 100%;}
+    .wedding-ceremony{padding: 100px 0 250px; margin-bottom: 255px;}
+
+
+    /******************* About Page *******************/
+    .our-philosophy .img-sec .img-bg-white-sec{height: 393px; width: 445px;}
+    .our-philosophy .content { padding-right: 70px; }
+    .our-vision .img-sec .img-bg-white-sec{right: -38px;height: 413px; width: 544px;}
+
+    /******************* Services Page *******************/
+    .services-banner-sec .banner-content { padding-top: 0; }
+    .services-banner-sec .next-row .left-content { padding-top: 40px;}
+
+
+} 
+
+
+@media (min-width: 1320px) and (max-width: 1399.98px){
+    
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 19%;}
+}
+@media (min-width: 1400px) and (max-width: 1599.98px){
+    
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 10%;}
+}
+
+@media (min-width: 1800px) and (max-width: 1919px){
+    
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 27%;}
+}
+
+@media (min-width: 1920px) and (max-width: 2100px){
+    
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 32%;}
+    // .banner-sec .left-right-controls{left: 16px;}
+}
+
+@media (min-width: 2160px) and (max-width: 2220px){
+    
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 40%;}
+}
+
+@media (min-width: 2850px) and (max-width: 3020px){
+    
+    .banner-sec .carousel-control-prev{ left: 215px;}
+    .banner-sec .carousel-control-next{ left: 220px;}
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 40%;}
+    .header .header-buttons .common-btn { margin: 0; padding: 15px 19px; }
+}
+
+
+
+@media (min-width: 576px) and (max-width: 687px){
+
+    // .logo img,.header .header-buttons{display: none;}
+    .header .mobile-toggle-sec { display: flex; align-items: center; justify-content: space-between; padding: 0; z-index: 999999; position: relative;}
+    .header .mobile-logo-sec, .header .mobile-header-buttons{display: inline-block;text-align: center;}
+    .header .menu{position: fixed; right: 0; top: 0; bottom: 0; background-color: $color-white; transform: translateX(-101%); transition: all .5s ease; width: 100%; padding: 30px 0px; z-index: 99999; overflow-x: hidden;}
+    .header .menu.show { transition: all .5s ease; transform: translateX(0); }
+    
+    .header .header-buttons { text-align: center; padding-left: 12px; display: flex; justify-content: center; }
+    
+    // .header .mobile-logo-sec img{width: 70%;}
+    .header{padding: 10px 0 20px;    border-top: 0;}
+    .header .logo{display: flex; margin-bottom: 20px;background-color: $color-white;padding: 10px 12px;justify-content: space-between;}
+    .header .menu-toggle i { font-size: 26px; color: $color-black; }
+    
+    .header .menu .navbar ul li{display: block;padding-right: 0px !important;}
+    .header .menu .navbar ul { display: block;padding-top: 30px !important;}
+    .header .menu { text-align: left; }
+    .header .menu .navbar ul li a:hover{color: $color-white;}
+    .header .menu .navbar ul li a{padding: 12px;}
+    .header .menu .navbar{display: block;width: 100%;}
+    .header .common-btn{margin-top: 0;}
+
+    .how-to-get-married .text-center p { padding: 0 0px; }
+
+    .header .header-buttons .quote-btn{display: none;}
+    .header .header-buttons .contact-btn{display: block;}
+    .navbar-toggler{ border: 1px solid #000 !important; padding: 2px 5px !important;}
+
+    .header .header-buttons .common-btn{ padding: 15px 20px; font-size: 14px;}
+
+    
+
+
+    .common-btn{padding: 10px 10px; font-size: 12px;margin-top: 30px;}
+    .common-btn:hover { background-color: transparent; color: $color-yellow; }
+    .petit-text{font-size: 18px; line-height: 22px;margin-bottom: 5px;}
+    .common-text h1{font-size: 38px;line-height: 48px;}
+    .common-padding { padding: 40px 0; }
+    .common-text h2{font-size: 30px;line-height: 40px;margin-bottom: 15px;}
+    .common-text p{font-size: 14px;line-height: 24px;}
+
+
+    .banner-sec p { padding-right: 0; }
+    // .banner-sec .carousel-control-next { left: 14%; }
+    .banner-sec .carousel-control-next, .banner-sec .carousel-control-prev{width: 5%;}
+    .banner-sec .carousel-control-prev { left: 20px; }
+    .banner-sec{height: auto;background-position: -660px;}
+    .banner-sec .slider img { height: auto; width: 100%; object-fit: unset; }
+    .banner-sec .left-right-controls{    bottom: 86px;}
+    .banner-sec .carousel-control-next { left: 0%; margin-left: 55px; }
+    .banner-sec .slider .slider-content{top: 50%;}
+
+    .banner-sec .slider .mobile-banner { display: block; }
+    .banner-sec .slider .desktop-banner { display: none; }
+
+
+    .randy-stratton img{margin-bottom: 30px !important;}
+    .randy-stratton h4::before{display: none;}
+
+
+    .services-sec .next-row { padding-top: 0; }
+    .services-sec .inner-box{padding-top: 30px;}
+    .services-sec .inner-box article { height: auto; background-position: top center; background-repeat: no-repeat; background-size: cover; }
+
+    .the-story .right-sec article.d-flex{display: block !important;padding: 0; margin-top: 30px;}
+    .the-story .right-sec h4{padding: 20px 0px; margin-bottom: 0;}
+    .the-story .right-sec h5{margin-top: 20px; margin-bottom: 20px;}
+    .the-story .right-sec::after{display: none;}
+
+    .testimonial-sec{padding: 40px 0 70px;}
+    .testimonial-sec .testimonial-content .client-comment p{font-size: 18px;line-height: 32px;}
+    .testimonial-sec .testimonial-content .client-details .name-details h5{font-size: 17px;line-height: 23px;}
+    .testimonial-sec .testimonial-content .client-details .name-letter { margin-right: 10px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p img { margin-left: 5px; }
+    .testimonial-sec .testimonial-content .client-details .name-details p{font-size: 12px;}
+    .testimonial-sec .testimonial-content .carousel-control-next { right: 80%; }
+    .testimonial-sec .testimonial-content .carousel-control-next, .testimonial-sec .testimonial-content .carousel-control-prev{bottom: -35px;}
+    .testimonial-sec .testimonial-content{padding: 20px 0 0;}
+
+    .wedding-ceremony{margin-bottom: 0;}
+    .wedding-ceremony .video-sec{position: relative;}
+    .wedding-ceremony .video-sec img.main-img{position: relative;}
+    .wedding-ceremony .video-sec .on-hover { position: relative; height: auto; width: auto; top: -90px; left: 44%; }
+    .wedding-ceremony .video-sec .on-hover img {  top: 0; right: 0; left: 0; width: 10%;    display: block; }
+    .wedding-ceremony .video-sec #myVideo{height: auto; width: 100%;    position: relative;}
+
+    .how-to-get-married .inner-box:nth-child(2) {padding-top: 100px;}
+    .how-to-get-married .inner-box article{padding: 70px 15px 40px;}
+    .how-to-get-married .inner-box article .common-btn{margin-top: 30px;}
+    .how-to-get-married .inner-box article h3 { font-size: 21px; margin-bottom: 15px; line-height: 28px; }
+    .how-to-get-married .inner-box article ul li { font-size: 12px;}
+
+    .our-gallery figure h4{right: 26%;}
+    // .our-gallery .modal .modal-content{    padding: 10px;width: 91%;}
+    .mfp-zoom-out-cur img.mfp-img { height: auto !important;}
+
+    .from-sec .form-content{padding: 20px;}
+    .from-sec .form-content h2 { font-size: 25px; }
+    .from-sec .form-content p{font-size: 13px;line-height: 21px;}
+    .from-sec .form-content form { padding-top: 30px; }
+    .from-sec .form-content form select{background-position: 255px center;}
+
+    .recent-posts .owl-controls .owl-nav{top: -36px;}
+    .recent-posts .post-item .post-content h3{font-size: 18px;line-height: 24px;}
+    .recent-posts .post-item .post-content ul { display: block; }
+    .recent-posts .post-item .post-content h3.post-heading2 { margin-bottom: 15px; }
+
+    .footer { padding: 40px 0;}
+    .footer .link-text{padding-top: 40px;}
+    .footer .contact-footer{padding: 40px 12px 0;}
+    .footer .map-img { padding-left: 12px; padding-top: 30px; }
+
+    .copyright p { font-size: 12px; line-height: 22px;}
+
+
+
+
+    /******************* About Page *******************/
+
+    .about-sec .about-content h4{font-size: 38px;line-height: 38px;}
+    .about-sec .about-content h4::after{margin: 15px 0 30px;}
+    .about-sec .about-content p:nth-child(2){padding-bottom: 15px !important;}
+    .about-sec img{margin-top: 30px;}
+    .about-sec .next-row { padding: 0px 0 0; }
+    .about-sec .inner-col{padding: 40px 12px 0;}
+    .about-sec .next-row h3 {font-size: 28px; line-height: 34px; margin-bottom: 15px !important; }
+
+    .quiet-msg p{padding: 0;}
+
+    .our-philosophy .content { padding-right: 12px; }
+    .our-philosophy .img-sec img{top: 0;width: 100%;}
+    .our-philosophy .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;left: 0;}
+    .our-philosophy .img-sec{padding-top: 40px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;font-size: 16px;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::before{position: relative; bottom: 0; left: 0; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-philosophy .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+    .our-vision .content { padding-left: 12px; }
+    .our-vision .img-sec .img-bg-white-sec{position: relative;height: auto; width: auto;right: 0;}
+    .our-vision .img-sec img{top: 0;width: 100%;}
+    .our-vision .img-sec{padding-bottom: 40px;}
+    .our-vision .img-sec .img-bg-white-sec h4{display: flex;align-items: center;justify-content: center;margin: 0;text-align: center;font-size: 16px;}
+    .our-vision .img-sec .img-bg-white-sec h4::before{content: ""; display: inline-block; height: 1px;background-color: $color-content; transform: rotate(0deg);width: 50px;margin: 0 20px 0 0;}
+    .our-vision .img-sec .img-bg-white-sec h4::after{width: 50px;max-width: 0 0 0 20px;}
+
+
+    /******************* Services Page *******************/
+    
+    .services-banner-sec .banner-content { padding-top: 0; }
+    .services-banner-sec p { padding-right: 0; }
+    .services-banner-sec img{margin-top: 30px;}
+    .services-banner-sec .next-row .left-content { padding-top: 40px; padding-right: 12px; }
+    .services-banner-sec .next-row .right-content { padding-top: 40px; }
+    .services-banner-sec .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-banner-sec .next-row article.next-article { padding-top: 40px; }
+
+
+    .services-banner-sec2 p { padding-right: 0; }
+    .services-content .next-row .left-content { padding-right: 10px; }
+    .services-content .next-row h3 { font-size: 19px; line-height: 24px; margin-bottom: 15px; }
+    .services-content .next-row article.next-article { padding-top: 40px; }
+    .services-content .next-row .right-content { padding-top: 40px; }
+}

@@ -1,0 +1,17 @@
+.common-btn{
+    background-color: $color-yellow; 
+    padding: 15px 25px;
+    font-size: $font-size-s;
+    line-height: 19px;
+    border: 1px solid $color-yellow;
+    color: $color-content;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    margin-top: 40px;
+    display: inline-block;
+}
+.common-btn:hover{
+    background-color: transparent;
+    color: $color-content;
+}
+

@@ -1,0 +1,60 @@
+.testimonial-sec{
+    padding: 100px 0 175px;
+
+    .testimonial-content{
+        .client-comment{
+            p{
+                font-size: $font-size-lg;
+                font-weight: $font-weight-medium;
+                line-height: 38px;
+                padding: 20px 0 30px !important;
+                color: $color-content;
+            }
+        }
+
+        .client-details{
+            .name-letter{
+                margin-right: 20px;
+            }
+            .name-details{
+                h5{
+                    font-size: 20px;
+                    font-weight: $font-weight-bold;
+                    line-height: 36px;
+                    margin: 0;
+                }
+                p{
+                    line-height: 19px;
+
+                    img{
+                        margin-left: 15px;
+                        padding-bottom: 10px;
+                    }
+                }
+            }
+        }
+
+        .carousel-control-next, .carousel-control-prev{
+            align-items: end;
+            width: 1%;
+            bottom: -75px;
+    
+            i{
+                color: #3333334D;
+                font-size: 20px;
+    
+                &:hover{
+                    color: $color-content;
+                }
+    
+            }
+        }
+        .carousel-control-next{
+            right: 92%;
+        }
+        .carousel-control-prev{
+            left: auto;
+        }
+        
+    }
+}

@@ -1,0 +1,60 @@
+
+.from-sec{
+    background-image: url('../images/form-bg.jpg');
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+
+    .form-content{
+        background-color: $color-white;
+        border-top: 6px solid $color-yellow;
+        border-bottom: 6px solid $color-yellow;
+        padding: 50px;
+        
+
+        h2{
+            font-size: 45px;
+            margin-bottom: 30px;
+        }
+        p{
+            font-size: 18px;
+            font-weight: $font-weight-medium;
+            line-height: 26px;
+            color: $color-yellow;
+        }
+
+        form{
+            padding-top: 50px;
+            margin: 0;
+
+            .form-inner{
+                padding-bottom: 25px;
+            }
+            
+            
+
+            input{
+                @include same-form-field();
+
+                
+            }
+            textarea{
+                @include same-form-field();
+                height: 124px;
+                margin-bottom: 0;
+            }
+            select{
+                appearance: none;
+                background-image: url(../images/select-icon.png);
+                background-repeat: no-repeat;
+                background-position: 240px center;
+                @include same-form-field();
+                
+            }
+
+            .parsley-required{color: #ff0000;}
+            .parsley-error{border: 1px solid #ff0000;}
+            .parsley-type{color: #008000;}
+        }
+    }
+}

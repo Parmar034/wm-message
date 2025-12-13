@@ -1,0 +1,8 @@
+.product-logo-icon-section .owl-carousel{display: flex; justify-content: center;}
+.product-logo-icon-section .owl-carousel .owl-item{width: 100px !important; margin: 0 25px !important; display: flex; align-items: center; justify-content: center;}
+.product-logo-icon-section .owl-carousel .owl-item img{width: 100px; height: 100px; object-fit: contain;}
+.product-logo-icon-carousel{display: flex !important; justify-content: center;}
+.product-logo-icon-section .owl-stage-outer{width: 850px;}
+.product-logo-icon-section .owl-carousel .owl-item:first-of-type{margin-left: 0 !important;}
+
+.product-logo-icon-section .owl-carousel .owl-item img{background-color: #ffffff; border-radius: 50%; object-fit: contain; border: 1px solid #dadada; padding: 3px;}

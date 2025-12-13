@@ -1,0 +1,115 @@
+.footer{
+    padding: 80px 0;
+    border-top: 3px solid $color-yellow;
+
+    .footer-content{
+
+    .footer-logo{
+        padding-bottom: 32px;
+    }
+    p{
+        font-size: $font-size-s;
+        font-weight: $font-weight-medium;
+        line-height: 26px;
+        padding-bottom: 32px;
+        margin-bottom: 0;
+    }
+
+    ul{
+        display: flex;
+        line-height: none;
+        padding: 0;
+        margin: 0;
+
+        li{
+            
+           
+
+            &:last-of-type{
+                margin-right: 0;
+            }
+
+            a{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid $color-content;
+                border-radius: 50px;
+                padding: 14px;
+                margin-right: 20px;
+                width: 50px;
+                height: 50px;
+
+                img{
+                    width: 100%;
+                }
+            }
+            
+
+        }
+    }
+    
+    }
+
+    h3{
+        font-size: $font-size-lg;
+        font-weight: $font-weight-medium;
+        line-height: 29px;
+        color: $color-heading;
+        margin-bottom: 20px;
+        text-transform: capitalize;
+    }
+
+    .link-text {
+
+        ul {
+            li{
+                a{
+                    font-size: $font-size-s;
+                    font-weight: $font-weight-medium;
+                    line-height: 35px;
+
+                    &:hover{
+                        color: $color-yellow;
+                    }
+                }
+            }
+        }
+    }
+
+    .contact-footer{
+        padding: 0;
+        ul{
+            li{
+                    font-size: $font-size-s; 
+                    font-weight: $font-weight-medium; 
+                    line-height: 25px;
+                    padding-left: 24px;
+                    padding-bottom: 15px;
+                    background-repeat:no-repeat;
+                    background-position: 0 8px;
+
+                &:nth-child(1){
+                    background-image: url('../images/location.png');
+                }
+                &:nth-child(2){
+                    background-image: url('../images/call.png');
+                }
+                &:nth-child(3){
+                    background-image: url('../images/email.png');
+                }
+                
+                a{
+                    &:hover{
+                        color: $color-yellow;
+                    }
+                }
+            }
+        }
+    }
+
+    .map-img{
+        padding-left: 30px;
+    }
+
+}

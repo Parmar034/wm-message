@@ -1,0 +1,55 @@
+.wedding-ceremony{
+    background-color: #F7FBFC;
+    position: relative;
+    padding: 100px 0 330px;
+    margin-bottom: 245px;
+
+    .video-sec{
+        position: relative;
+        img.main-img{
+            margin-top: 25px;
+            position: absolute;
+            left: 0;
+            right: 0;
+
+        
+
+        }
+        &:hover .on-hover img{
+            display: block;
+            cursor: pointer;
+        }
+
+        
+
+        #myVideo
+            {
+            display:none;
+            position: absolute;
+            z-index: 1111;
+            height: 550px;
+            width: 1295px;
+            left: 0;
+            right: 0;
+            margin-top: 25px;
+            }
+
+        .on-hover{
+            position: relative;
+            height: auto;
+            width: auto;
+            top: 260px;
+            left: 48%;
+
+            img{
+            display: none;
+            position: absolute;
+            top: 44%;
+            right: 0;
+            left: 0;
+            transition: 0.3s;
+            }
+        }
+        
+    }
+}

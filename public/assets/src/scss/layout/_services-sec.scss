@@ -1,0 +1,82 @@
+.services-sec{
+    padding: 0 0 100px;
+    position: relative;
+    .next-row{
+        padding-top: 25px;
+    }
+
+    @mixin samefont(){
+        line-height: 26px; 
+        font-weight: $font-weight-semiBold;
+        
+    }
+    h3{
+        @include samefont();
+        margin-bottom: 6px; 
+    }
+
+
+    .inner-box{
+        position: relative;
+        article{
+            height: 450px;
+            background-position: center;
+
+            .text-content{
+                position: relative;
+                height: 450px;
+                background: linear-gradient(0deg, #000000 0%, rgba(80, 80, 80, 0.379375) 55.7%, rgba(217, 217, 217, 0) 100%);
+                cursor: pointer;
+
+                &:hover{
+                    background: linear-gradient(0deg, #FCCF36 0%, rgba(252, 207, 54, 0.7) 42.65%, rgba(252, 207, 54, 0.4) 65.18%, rgba(252, 207, 54, 0) 100%);
+                }
+
+                &:hover .show-on-hover{
+                    height: auto;
+                    color: $color-heading;
+                    padding: 10px 0 20px;
+                }
+                &:hover .inner-text-sec{
+                    color: $color-heading;
+                    padding: 0;
+                    top: 344px;
+                }
+
+                .inner-text-sec{
+                    position: absolute;
+                    width: 100%;
+                    top: 358px;
+                    padding-bottom: 11px;
+                    color: $color-white;
+                }
+                .show-on-hover{
+                    height: 0; 
+                    overflow: hidden;
+                    color: $color-white;
+                    transition: 0.10s;
+                }
+                h4{
+                    margin: 0;
+                }
+            }
+        }
+
+        .box-1{
+            background-image: url('../images/services-1.png');
+           
+        }
+        .box-2{
+            background-image: url('../images/services-2.png');
+           
+        }
+        .box-3{
+            background-image: url('../images/services-3.png');
+           
+        }
+        .box-4{
+            background-image: url('../images/services-4.png');
+           
+        }
+    }
+}

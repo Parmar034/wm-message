@@ -1,0 +1,61 @@
+/*********** Top Header ***********/
+.header-top-section{
+    background-color: var(--theme-color); padding: 24px 0;
+    .content-col{
+        position: relative;
+
+        p{
+            font-size: 16px; font-weight: 400; line-height: 21px; letter-spacing: 0.2em; text-align: center; color: var(--white); text-transform: uppercase;
+        }
+
+        .close-welcome-text{position: absolute; right: 0; top: 0;line-height: 0;}
+    }
+}
+
+.header-top-section.hide{display: none;}
+
+/*********** Header ***********/
+
+header .number-text{font-family: 'Yrsa'; font-size: 14px; font-weight: 400; line-height: 17.05px; letter-spacing: -0.04em; }
+header .first-header-part{padding: 15px 0;border-bottom: 1px solid var(--border-gray);}
+header .left-side article{display: flex; align-items: center;}
+header .left-side article .header-two-block{display: flex; box-shadow: 0px 0px 4.84px 0px #0000001A; padding: 6px 5px; border-radius: 5px;}
+header .left-side article .header-two-block.second-block{margin-left: 20px;}
+header .left-side article .header-two-block p{ font-size: 12px; font-weight: 400; line-height: 15.52px; letter-spacing: -0.04em; color: var(--gray);}
+header .left-side article .header-two-block p.price-text{color: #404041;padding-top: 4px;font-size: 10px;letter-spacing: unset;}
+header .left-side article .header-two-block p.price-text .number-text{font-size: 16px;line-height: 20px; margin-right: 3px;letter-spacing: unset;}
+header .left-side article .header-two-block a{line-height: 0; margin-left: 10px;}
+
+header .center-logo{text-align: center;}
+
+header .right-side ul{display: flex; align-items: center;}
+header .right-side ul form input{padding: 9px 18px; border-radius: 50px;width: 190px; border: 1px solid #acacad; outline: unset; font-size: 16px; line-height: 20px; font-weight: 400;margin: 0;}
+header .right-side ul form button{background-color: transparent; border: unset; outline: unset;    padding-left: 10px;padding-right: 15px;}
+header .right-side ul li.dropdown{padding: 0 15px;cursor: pointer;}
+header .right-side ul li a{line-height: 0; display: block;}
+header .right-side ul li.dropdown .dropdown-menu li a{display: block; width: 100%;font-size: 16px; line-height: 20px; font-weight: 400;padding: 8px 10px;color: var(--black);}
+header .right-side ul li.dropdown .dropdown-menu{margin-top: 0px; display: block; border-width: 4px 0px 0px; border-style: solid none none; border-color: var(--theme-color); border-image: none; box-shadow: rgba(151, 149, 149, 0.23) 0px 7px 6px; padding: 0px !important; border-radius: 0px;}
+header .right-side ul li.dropdown .dropdown-menu li {display: block;}
+header .right-side ul li.dropdown .dropdown-menu li a:hover{background-color: var(--theme-light-color);}
+header .right-side ul li.dropdown .dropdown-menu{display: none;}
+header .right-side ul li.dropdown .dropdown-menu.show{display: block;}
+header .right-side{padding: 0;}
+header .right-side .header-whishlist, header .right-side .header-cart{padding: 0 15px;}
+header .right-side .header-whishlist a, header .right-side .header-cart a{position: relative;color: var(--theme-dark-color);}
+header .right-side .header-whishlist a span, header .right-side .header-cart a span{position: absolute; right: -19px; top: -9px; font-size: 16px;}
+
+header .header-menu-part{padding: 20px 0;}
+header .header-menu-part ul li a{font-size: 16px; font-weight: 400; line-height: 20.69px;color: var(--theme-dark-color);text-transform: uppercase;padding: 0 25px;}
+header .header-menu-part ul li a:hover{color: var(--theme-color);}
+header .header-menu-part ul{display: flex; align-items: center; flex-direction: row;justify-content: center}
+
+header.sticky{position: fixed; top: 0; background-color: var(--white); z-index: 111111; box-shadow: 1px 1px 6px #e6e6e6; width: 100%;}
+header.sticky .left-side article{display: none;}
+header.sticky .right-side ul{display: none;}
+
+header.sticky .center-logo img{max-width: 150px;}
+header .center-logo img{transition: ease-in-out .6s;max-width: 100%;}
+.mobile-right-section{display: none;}
+.mobile-header-right-menu{display: none;}
+.mobile-header-box-sec{display: none;}
+.navbar-toggler{display: none;}

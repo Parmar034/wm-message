@@ -1,0 +1,9 @@
+.collections-section h2 , .gemstone-section h2 , .catalogues-section h2{margin-bottom: 10px;}
+
+
+/* collections and catalogues Product Box CSS */
+
+.product-box-section article .product-details-section .inner-section h3{margin-bottom: 0; height: auto;}
+.product-box-section article .product-details-section .inner-section {display: flex; align-items: center; justify-content: space-between;}
+.product-box-section .product-images .new-collections-tagline{position: absolute; z-index: 111; font-size: 18px; font-weight: 400; line-height: 21.92px; letter-spacing: -0.02em; background-color: var(--theme-color); color: var(--white); padding: 2px 5px;top: 5px; left: 5px;}
+.product-box-section .product-images {position: relative;}
