@@ -14,11 +14,11 @@
                         @csrf
                         <h3 class="mt-3 mb-2">Log in</h3>
                         <div class="text-left mb-3">
-                            <label class="mb-0">User Name</label>
+                            <label class="mb-0">Email</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">@include('icons.person')</span>
-                                <input type="text" class="form-control" placeholder="Enter user name" name="user_name"
-                                    @if (isset($_COOKIE['user_name'])) value="{{ $_COOKIE['user_name'] }}" @endif>
+                                <input type="email" class="form-control" placeholder="Enter user email" name="email"
+                                    @if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}" @endif>
                             </div>
                         </div>
                         <div class="text-left mb-3">
@@ -32,6 +32,11 @@
                                     @include('icons.eye')
                                 </span>
                             </div>
+                        </div>
+                        <div class="input-group">
+                        <a href="{{ route('password.forgot') }}" class="text-primary">
+                            Forgot Password?
+                        </a>
                         </div>
                         <div class="mb-3">
                             <label for=""></label>

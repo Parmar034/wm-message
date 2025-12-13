@@ -13,33 +13,39 @@
     <div class="auth-content">
         <div class="card">
             <div class="card-body text-center">
-                <div class="mb-4">
-                    <img src="{{ asset('images/login/logo.png') }}" class="img-fluid">
+                <div class="mb-5 text-center">
+                    <img src="{{ asset('images/newlogo.webp') }}" height="80px" class="">
                 </div>
-                <form method="POST" action="{{ route('update.password') }}" data-parsley-validate="">
+                <form method="POST" action="{{ route('forgot-password-send-otp') }}"  id="forgotForm">
                     @csrf
-                <h3 class="mb-4">Forgot Password</h3>
-                <div class="input-group mb-3">
-                    <input type="hidden" name="token" value="{{ $user_token }}">
-                    <input type="email" class="form-control" placeholder="Email" name="email" required data-parsley-errors-container="#content_required" data-parsley-required-message="Please Enter Title">    
-                </div>
-                <span id="content_required"></span>
-                <div class="input-group mb-4">
-                    <input type="password" class="form-control" placeholder="New Password" id="password" name="password" required data-parsley-errors-container="#pass_required" data-parsley-required-message="Please Enter Password" data-parsley-minlength="8"
-                    data-parsley-minlength="8" data-parsley-pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                    data-parsley-error-message="Password must be at least 8 characters long and include at least one letter and one digit.">
-                </div>
-                <span id="pass_required"></span>
-                <div class="input-group mb-4">
-                    <input type="password" class="form-control" placeholder="Confirm Password" name="con_password" required data-parsley-errors-container="#conpass_required" data-parsley-required-message="Please Enter Confirm Password" data-parsley-equalto="#password" data-parsley-error-message="Passwords does not match.">
-                </div>
-                <span id="conpass_required"></span>
-                <button class="btn btn-primary shadow-2 mb-4" type="submit">Submit</button>
-            </form>
+                    <h3>Forgot Password</h3>
+
+                    <input type="email" name="email" class="form-control mb-2"
+                        placeholder="Enter your email" required>
+
+                    @error('email') <div class="text-danger">{{ $message }}</div> @enderror
+
+                    <button class="btn btn-primary" id="sendOtpBtn">Send OTP</button>
+                </form>
+
                  
             </div>
         </div>
     </div>
 </div>
 
+
+
 @endsection
+
+@section('script')
+
+<script>
+    document.getElementById('forgotForm').addEventListener('submit', function () {
+        let btn = document.getElementById('sendOtpBtn');
+        btn.disabled = true;
+        btn.innerText = 'Sending...';
+    });
+</script>
+@endsection
+

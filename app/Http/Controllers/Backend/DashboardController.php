@@ -15,7 +15,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return redirect()->route('user-management');
         $today_used_qrcode = QrCode::whereDate('used_date', Carbon::today())->count();
         $overall_qr_scans = QrCode::where('status', 'Used')->count();
         // $today_members = Member::whereDate('created_at', Carbon::today())->count();

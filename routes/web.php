@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Backend;
 use App\Http\Controllers\QRCode\QRController;
@@ -43,11 +44,21 @@ Route::get('login', function () {
 
 Route::post('login', [LoginController::class, 'customLogin']);
 
-Route::get('reset-password', function () {
-    return view('auth.reset_pass_link');
-})->name('reset-password');
+// ForgotPassword
 
-Route::post('reset-password', [LoginController::class, 'send_link_reset']);
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('password.forgot');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendOtp'])->name('forgot-password-send-otp');;
+Route::get('/verify-otp', [ForgotPasswordController::class, 'showOtpForm'])->name('password.otp');
+Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('verifyOtp');
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
+
+
+// Route::get('reset-password', function () {
+//     return view('auth.reset_pass_link');
+// })->name('reset-password');
+
+// Route::post('reset-password', [LoginController::class, 'send_link_reset']);
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -67,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('member-management/edit/{id}', [Backend\UserController::class, 'memeberedit'])->name('member-management.edit');
     // Route::get('member-list', [Backend\UserController::class, 'list'])->name('member-list');
     Route::post('member-list', [Backend\UserController::class, 'list'])->name('member-list');
+    Route::post('member-status', [Backend\UserController::class, 'updateStatus'])->name('member-management.status');
 
 
     Route::post('member-management/delete', [Backend\UserController::class, 'destroy'])->name('member-management.delete');

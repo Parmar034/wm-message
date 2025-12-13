@@ -1,28 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
+<style>
+    .parsley-errors-list{
+        padding: 0 !important;
+    }
+    .parsley-errors-list li{
+        text-align: left !important;
+    }
+</style>
+<div class="auth-wrapper">
+    <div class="auth-content">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-5 text-center">
+                    <img src="{{ asset('images/newlogo.webp') }}" height="80px" class="">
                 </div>
+                <form method="POST" action="{{ route('verifyOtp') }}" id="verifyForm">
+                    @csrf
+                    <h3>Verify OTP</h3>
+
+                    <input type="text" name="otp" class="form-control mb-2"
+                        placeholder="Enter OTP" required>
+
+                    @error('otp') <div class="text-danger">{{ $message }}</div> @enderror
+
+                    <button class="btn btn-primary mb-4 rounded-0" id="verifyBtn">Verify</button>
+                </form>
+
+                 
             </div>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
+
+<script>
+    document.getElementById('verifyForm').addEventListener('submit', function () {
+        let btn = document.getElementById('verifyBtn');
+        btn.disabled = true;
+        btn.innerText = 'Sending...';
+    });
+</script>
 @endsection

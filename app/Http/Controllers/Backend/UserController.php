@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,43 +17,14 @@ class UserController extends Controller
         return view('frontend.member-management.index');
     }
 
-    // public function list(Request $request)
-    // {
-    //     $query = Member::query();
-
-    //     if ($request->get('search')) {
-    //         $search = $request->get('search');
-    //         $query->where(function ($q) use ($search) {
-    //             $q->where('member_code', 'like', "%$search%")
-    //                 ->orWhere('member_name', 'like', "%$search%")
-    //                 ->orWhere('phone', 'like', "%$search%")
-    //                 ->orWhere('location', 'like', "%$search%");
-    //         });
-    //     }
-
-    //     $members = $query->get();
-
-    //     if ($members->count()) {
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Members list found successfully.',
-    //             'data' => $members
-    //         ]);
-    //     }
-
-    //     return response()->json([
-    //         'status' => false,
-    //         'message' => 'No members found.',
-    //     ]);
-    // }
-
     public function list(Request $request)
     {
-        $member_list = Member::orderBy('created_at', 'desc')->get();
+        $member_list = User::where('role', 'Admin')->orderBy('created_at', 'desc')->get();
         $counter = 1;
         $member_list->transform(function ($item) use (&$counter) {
             $item['ser_id'] = $counter++;
-            // $item['action'] = "-";
+            $checked = $item->status == 1 ? 'checked' : '';
+            $item['status'] = '<div class="form-check form-switch"><input class="form-check-input status-toggle" type="checkbox" data-id="' . $item->id . '" ' . $checked . '></div>';
             $item['action'] = '<a href="' . route('member-management.edit',$item['id']) . '" class="table-btn table-btn1 service_edit"><span class="pcoded-micon"><img src="'. asset('assets/images/edit_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
             $item['action'] .= '<a data-id="' . $item['id'] . '"  data-original-title="Delete sections" class="table-btn table-btn1 delete-member-btn"><span class="pcoded-micon"><img src="' . asset('assets/images/delete_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
             return $item;
@@ -67,101 +40,112 @@ class UserController extends Controller
     public function updateMember(Request $request)
     {
         $json = $request->expectsJson();
+
+
+        // Validation rules
         $rules = [
-            'member_code' => 'required|max:255|unique:members,member_code' . ($request->member_id ? ',' . $request->member_id : ''),
-            'member_name' => 'required|string|max:100',
-            'phone' => 'required|numeric',
-            'location' => '',
+            'email' => 'required|email|max:255|unique:users,email,' . ($request->user_id ?? 'NULL') . ',id',
+            'name' => 'required|string|max:100',
+            'phone' => 'required|digits:10',
+            // 'password' => $request->user_id ? 'nullable|min:8|confirmed' : 'required|min:8|confirmed', 
+            // Use password_confirmation field
         ];
+
+        if ((isset($request->change_password) && $request->change_password == 'on') || !$request->user_id) {
+            $rules['password'] = 'required|min:8|confirmed';
+        }
+
         $validator = Validator::make($request->all(), $rules);
 
-        $response = null;
-
+        // Check validation
         if ($validator->fails()) {
             if ($json) {
-                $response = response()->json([
+                return response()->json([
                     'status' => false,
                     'message' => 'Validation Error',
                     'errors' => $validator->errors()
                 ], 422);
             } else {
-                // $response = to_route('member-management.add')
-                //     ->withErrors($validator)
-                //     ->withInput();
-                if(isset($request->member_id) && $request->member_id != ''){
-                    $response = to_route('member-management.edit', $request->member_id)
-                        ->withErrors($validator)
-                        ->withInput();
-                }else{
-                    $response = to_route('member-management.add')
-                        ->withErrors($validator)
-                        ->withInput();
-                }
+                // Redirect back with errors and input
+                $redirect = $request->user_id
+                    ? to_route('member-management.edit', $request->user_id)
+                    : to_route('member-management.add');
+
+                return $redirect->withErrors($validator)->withInput();
             }
-            return $response;
         }
 
-        if ($request->member_id) {
-            $member = Member::find($request->member_id);
-            if (!$member) {
-                $response = $json
-                    ? response()->json(['status' => false, 'message' => 'Member not found.'], 404)
-                    : to_route('member-management')->with('error', 'Member not found.');
-                return $response;
+        // Store/update user
+        if ($request->user_id) {
+            $user = User::find($request->user_id);
+            if (!$user) {
+                $message = 'User not found.';
+                return $json
+                    ? response()->json(['status' => false, 'message' => $message], 404)
+                    : to_route('member-management')->with('error', $message);
             }
-            $save = $member->update($validator->validated());
         } else {
-            $member = new Member($validator->validated());
-            $save = $member->save();
+            $user = new User();
         }
+
+        // Fill validated data
+        $data = $validator->validated();
+
+        // Hash password only if provided
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+            $data['role'] = 'Admin';
+
+        } else {
+            unset($data['password']); 
+        }
+
+        $user->fill($data);
+        $save = $user->save();
 
         if (!$save) {
-            $response = $json
-                ? response()->json(['status' => false, 'message' => 'Something went wrong.'])
-                : to_route('member-management')->with('error', 'Something went wrong while updating record');
-        } else {
-            $response = $json
-                ? response()->json(['status' => true, 'message' => 'Member saved successfully.'])
-                : to_route('member-management')->with('success', 'Member saved successfully.');
+            $message = 'Something went wrong while saving user.';
+            return $json
+                ? response()->json(['status' => false, 'message' => $message])
+                : to_route('member-management')->with('error', $message);
         }
 
-        return $response;
+        $message = 'User saved successfully.';
+        return $json
+            ? response()->json(['status' => true, 'message' => $message])
+            : to_route('member-management')->with('success', $message);
     }
+
 
     public function memeberedit(string $id)
     {
-        $member = Member::find($id);
+        $member = User::find($id);
         if (!$member) {
             return to_route('member-management')->with('error', 'Member details not found');
         }
         return view('frontend.member-management.add', ['member' => $member]);
     }
-    // public function destroy(Request $request, string $id)
-    // {
-    //     $json = $request->expectsJson();
-    //     $member = Member::find($id);
 
-    //     if (!$member) {
-    //         $response = $json
-    //             ? response()->json(['status' => false, 'message' => 'Member not found.'], 404)
-    //             : to_route('member-management')->with('error', 'Member not found.');
-    //         return $response;
-    //     }
+    public function updateStatus(Request $request)
+    {
+        $user = User::find($request->id);
 
-    //     $deleted = $member->delete();
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ]);
+        }
 
-    //     if (!$deleted) {
-    //         $response = $json
-    //             ? response()->json(['status' => false, 'message' => 'Something went wrong.'])
-    //             : to_route('member-management')->with('error', 'Something went wrong while deleting record');
-    //     } else {
-    //         $response = $json
-    //             ? response()->json(['status' => true, 'message' => 'Member deleted successfully.'])
-    //             : to_route('member-management')->with('success', 'Member deleted successfully.');
-    //     }
+        $user->status = $request->status;
+        $user->save();
 
-    //     return $response;
-    // }
+        return response()->json([
+            'status' => true,
+            'message' => 'Status updated successfully'
+        ]);
+    }
+  
     public function destroy(Request $request)
     {
         $id = $request->id;

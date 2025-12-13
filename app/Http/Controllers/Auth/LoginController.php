@@ -53,22 +53,22 @@ class LoginController extends Controller
     public function customLogin(Request $request)
     {
         $request->validate([
-            'user_name' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('user_name', 'password');
-        $credentialsuser['user_name'] = $credentials['user_name'];
+        $credentials = $request->only('email', 'password');
+        $credentialsuser['email'] = $credentials['email'];
         $credentialsuser['password'] = $credentials['password'];
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             // if ($user->role == 'administrator') {
                 if (isset($request->remember_me) && !empty($request->remember_me)) {
-                    setcookie('user_name', $request->user_name, time() + 432000);
+                    setcookie('email', $request->user_name, time() + 432000);
                     setcookie('password', $request->password, time() + 432000);
                 } else {
-                    setcookie('user_name', '', time() - 3600);
+                    setcookie('email', '', time() - 3600);
                     setcookie('password', '', time() - 3600);
                 }
 

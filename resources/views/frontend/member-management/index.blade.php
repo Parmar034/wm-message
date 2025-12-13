@@ -51,10 +51,10 @@
                                                 <thead>
                                                     <tr style="background-color: #E1EBF4 !important;">
                                                         <th>Sr&nbsp;No.</th>
-                                                        <th>MEMBER&nbsp;CODE</th>
-                                                        <th>MEMBER&nbsp;NAME</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
                                                         <th>PHONE&nbsp;NUMBER</th>
-                                                        <th>LOCATION</th>
+                                                        <th>Status</th>
                                                         <th>ACTIONS</th>
                                                     </tr>
                                                 </thead>
@@ -106,14 +106,14 @@
                     name: 'id',
                 },
                 {
-                    data: 'member_code',
-                    name: 'member_code',
+                    data: 'name',
+                    name: 'name',
                     // orderable: false,
                     // searchable: false
                 },
                 {
-                    data: 'member_name',
-                    name: 'member_name',
+                    data: 'email',
+                    name: 'email',
                     // orderable: false,
                     // searchable: false
                 },
@@ -124,10 +124,10 @@
                     // searchable: false
                 },
                 {
-                    data: 'location',
-                    name: 'location',
-                    // orderable: false,
-                    // searchable: false
+                    data: 'status',
+                    name: 'status',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'action',
@@ -176,6 +176,63 @@
                     }
                 });
             });
+        });
+
+        $(document).on('change', '.status-toggle', function () {
+
+            let checkbox = $(this);
+            let userId = checkbox.data('id');
+            let status = checkbox.is(':checked') ? 1 : 0;
+
+            let title = status === 1 ? 'Activate User?' : 'Deactivate User?';
+            let text  = status === 1
+                ? 'This user will be able to login.'
+                : 'This user will not be able to login.';
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "{{ route('member-management.status') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId,
+                            status: status
+                        },
+                        success: function (res) {
+
+                            if (res.status) {
+                                Swal.fire('Success!', res.message, 'success');
+                            } else {
+                                Swal.fire('Error!', res.message, 'error');
+                                checkbox.prop('checked', !status);
+                            }
+
+                        },
+                        error: function () {
+                            Swal.fire('Error!', 'Something went wrong.', 'error');
+                            checkbox.prop('checked', !status);
+                        }
+                    });
+
+                } else {
+                    // Revert toggle if cancelled
+                    checkbox.prop('checked', !status);
+                }
+
+            });
+
         });
     </script>
 @endsection
