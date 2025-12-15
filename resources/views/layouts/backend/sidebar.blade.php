@@ -22,7 +22,7 @@
                 </li>
                 @if(Auth::user()->role == 'SuerAdmin')
                 <li
-                    class="nav-item {{ in_array(\Request::route()->getName(), ['member-management', 'member-management.add', 'member-management.edit']) ? 'active' : '' }}">
+                    class="nav-item {{ in_array(\Request::route()->getName(), ['member-management', 'member-management.add', 'member-management.edit', 'member-plan.assign']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('member-management') }}">
                         <span class="pcoded-micon">@include('icons.member-management')</span>
                         <span class="pcoded-mtext">Member&nbsp;Management</span>

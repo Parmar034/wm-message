@@ -54,7 +54,11 @@
                                                         <th>Name</th>
                                                         <th>Email</th>
                                                         <th>PHONE&nbsp;NUMBER</th>
+                                                        <th>Assign Plan</th>
+                                                        <th>Start Date</th>
+                                                        <th>Expiry Date</th>
                                                         <th>Status</th>
+                                                        <th>Plan Assign</th>
                                                         <th>ACTIONS</th>
                                                     </tr>
                                                 </thead>
@@ -72,6 +76,8 @@
             </div>
         </div>
     </div>
+
+    @include('frontend.member-management.plan-assign-modal')
 @endsection
 @section('script')
 
@@ -124,8 +130,32 @@
                     // searchable: false
                 },
                 {
+                    data: 'assign_plan',
+                    name: 'assign_plan',
+                    // orderable: false,
+                    // searchable: false
+                },
+                {
+                    data: 'start_date',
+                    name: 'start_date',
+                    // orderable: false,
+                    // searchable: false
+                },
+                {
+                    data: 'end_date',
+                    name: 'end_date',
+                    // orderable: false,
+                    // searchable: false
+                },
+                {
                     data: 'status',
                     name: 'status',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'plan_assign',
+                    name: 'plan_assign',
                     orderable: false,
                     searchable: false
                 },
@@ -136,6 +166,19 @@
                     searchable: false
                 }
                 ],
+                rowCallback: function (row, data) {
+                    if (data.end_date !== '-') {
+                        let parts = data.end_date.split('-');
+                        let endDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                        let today = new Date();
+                        today.setHours(0,0,0,0);
+                        if (endDate <= today) {
+                             $(row).css('cssText', 'background-color: #ffe5e5 !important;');
+                        } else {
+                            $(row).css('cssText', 'background-color: #e6ffed !important;');
+                        }
+                    }
+                }
                  
 
             });
@@ -166,7 +209,7 @@
                             success: function(data) {
                                 if (data.status == 1) {
                                     toastr.success(data.message);
-                                    member_table.ajax.reload(null, false);
+                                    member_table.ajax.reload();
                                 } else {
                                     toastr.error(data.message);
                                 }
@@ -176,6 +219,74 @@
                     }
                 });
             });
+
+            $(document).on('submit', '#assignPlanModal form', function (e) {
+                e.preventDefault();
+
+                let form = $(this);
+                let formData = form.serialize();
+
+                // Get modal instance
+                let modalEl = document.getElementById('assignPlanModal');
+                let modalInstance = bootstrap.Modal.getInstance(modalEl);
+
+                // HIDE modal first (this removes backdrop issue)
+                modalInstance.hide();
+
+                Swal.fire({
+                    title: 'Assign Plan?',
+                    text: 'Are you sure you want to assign this plan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Assign',
+                    cancelButtonText: 'Cancel',
+                    allowOutsideClick: false
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            url: form.attr('action'),
+                            type: 'POST',
+                            data: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+
+                                // Reset form
+                                form[0].reset();
+                                $('#modal-plan-details').hide();
+
+                                // OPTIONAL: Reload DataTable only
+                                member_table.ajax.reload();
+                            },
+                            error: function (xhr) {
+                                Swal.fire(
+                                    'Error',
+                                    xhr.responseJSON?.message || 'Something went wrong',
+                                    'error'
+                                );
+                            }
+                        });
+
+                    } else {
+                        // If cancelled → reopen modal
+                        modalInstance.show();
+                    }
+                });
+            });
+
+
+
         });
 
         $(document).on('change', '.status-toggle', function () {
@@ -234,5 +345,47 @@
             });
 
         });
+
+      
+        $(document).on('click', '.openPlanModal', function () {
+
+            let userId = $(this).data('user-id');
+            let userName = $(this).data('user-name');
+
+
+            // Set user id in hidden field
+            $('#modal_user_id').val(userId);
+            $('#modal_user_name').val(userName);
+
+            // Reset modal data
+            $('#modal_plan_name').val('');
+            $('#modal-plan-details').hide();
+
+            // Open modal (Bootstrap 5)
+            let modal = new bootstrap.Modal(document.getElementById('assignPlanModal'));
+            modal.show();
+        });
+
+
+        // Show plan details inside modal
+        $(document).on('change', '#modal_plan_name', function () {
+
+            let selected = $(this).find(':selected');
+
+            if (!$(this).val()) return;
+
+            $('#modal-plan-type').text(selected.data('type'));
+            $('#modal-plan-price').text(selected.data('price'));
+
+            $('#modal-plan-limit').text(
+                selected.data('limit') ? selected.data('limit') : 'Unlimited'
+            );
+
+            $('#modal-plan-details').slideDown();
+        });
+
+
+
+
     </script>
 @endsection

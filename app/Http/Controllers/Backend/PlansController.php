@@ -79,7 +79,8 @@ class PlansController extends Controller
             $item['ser_id'] = $counter++;
             $checked = $item->status == 1 ? 'checked' : '';
             $item['status'] = '<div class="form-check form-switch"><input class="form-check-input status-toggle" type="checkbox" data-id="' . $item->id . '" ' . $checked . '></div>';
-            $item['action'] = '<a href="' . route('plan.edit',$item['id']) . '" class="table-btn table-btn1 service_edit"><span class="pcoded-micon"><img src="'. asset('assets/images/edit_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
+            // $item['action'] = '<a href="' . route('plan.edit',$item['id']) . '" class="table-btn table-btn1 service_edit"><span class="pcoded-micon"><img src="'. asset('assets/images/edit_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
+            $item['action'] = '<a href="javascript:void(0);" class="table-btn table-btn1 service_edit planEditConfirm" data-url="' . route('plan.edit', $item['id']) . '"><span class="pcoded-micon"><img src="'. asset('assets/images/edit_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
             $item['action'] .= '<a data-id="' . $item['id'] . '"  data-original-title="Delete sections" class="table-btn table-btn1 delete-plan-btn"><span class="pcoded-micon"><img src="' . asset('assets/images/delete_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
             return $item;
         });

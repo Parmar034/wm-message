@@ -248,5 +248,24 @@
             });
 
         });
+
+        $(document).on('click', '.planEditConfirm', function () {
+
+            let redirectUrl = $(this).data('url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to update the plan? This plan assigned to members will be changed.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, confirm',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = redirectUrl;
+                }
+            });
+        });
     </script>
 @endsection

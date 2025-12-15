@@ -20,4 +20,9 @@ class Plan extends Model
     ];
 
     public $timestamps = true;
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'plan_id');
+    }
 }

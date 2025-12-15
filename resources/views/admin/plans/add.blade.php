@@ -58,7 +58,7 @@
                                                 <label class="form-label">Plan Type</label>
 
                                                 <select class="form-control" name="plan_type" required data-parsley-required-message="Plan type is required"
-                                                        data-parsley-errors-container="#error-plan_type">
+                                                        data-parsley-errors-container="#error-plan_type" @if(isset($plan)) disabled @endif>
                                                     <option value="">-- Select Plan Type --</option>
                                                     <option value="Monthly" {{ (old('plan_type', $plan->plan_type ?? '') == 'Monthly') ? 'selected' : '' }}> Monthly </option>
                                                     <option value="Annual" {{ (old('plan_type', $plan->plan_type ?? '') == 'Annual') ? 'selected' : '' }}> Annual </option>

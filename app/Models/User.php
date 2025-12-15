@@ -9,6 +9,8 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use Illuminate\Support\Str;
+use App\Models\Subscription;
+
 
 
 class User extends Authenticatable implements OAuthenticatable
@@ -60,5 +62,10 @@ class User extends Authenticatable implements OAuthenticatable
         $this->api_token = $token;
         $this->save();
         return $token;
+    }
+
+    public function latestSubscription()
+    {
+        return $this->hasOne(Subscription::class, 'user_id')->latestOfMany();
     }
 }
