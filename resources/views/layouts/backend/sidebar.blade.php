@@ -32,7 +32,7 @@
 
                 @if(Auth::user()->role == 'SuerAdmin')
                 <li
-                    class="nav-item {{ in_array(\Request::route()->getName(), ['plans', 'user-management.add', 'user-management.edit']) ? 'active' : '' }}">
+                    class="nav-item {{ in_array(\Request::route()->getName(), ['plans', 'plan.add', 'plan.edit']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('plans') }}">
                         <span class="pcoded-micon">@include('icons.member-management')</span>
                         <span class="pcoded-mtext">Plans</span>
