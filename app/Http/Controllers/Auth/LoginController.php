@@ -57,9 +57,15 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-        $credentialsuser['email'] = $credentials['email'];
-        $credentialsuser['password'] = $credentials['password'];
+        // $credentials = $request->only('email', 'password');
+        // $credentialsuser['email'] = $credentials['email'];
+        // $credentialsuser['password'] = $credentials['password'];
+
+         $credentials = [
+            'email'    => $request->email,
+            'password' => $request->password,
+            'status'   => 1, // ✅ only active users
+        ];
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();

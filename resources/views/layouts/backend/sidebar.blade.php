@@ -29,7 +29,17 @@
                     </a>
                 </li>
                 @endif
+
                 @if(Auth::user()->role == 'SuerAdmin')
+                <li
+                    class="nav-item {{ in_array(\Request::route()->getName(), ['plans', 'user-management.add', 'user-management.edit']) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('plans') }}">
+                        <span class="pcoded-micon">@include('icons.member-management')</span>
+                        <span class="pcoded-mtext">Plans</span>
+                    </a>
+                </li>
+                @endif
+                <!-- @if(Auth::user()->role == 'SuerAdmin')
                 <li
                     class="nav-item {{ in_array(\Request::route()->getName(), ['user-management', 'user-management.add', 'user-management.edit']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user-management') }}">
@@ -57,7 +67,7 @@
                         <span class="pcoded-mtext">Message&nbsp;History</span>
                     </a>
                 </li>
-                @endif
+                @endif -->
 
                 <!-- <li class="nav-item pcoded-hasmenu {{ in_array(\Request::route()->getName(), ['user-management', 'user-management.add', 'user-management.edit', 'bulk-user.upload']) ? 'active pcoded-trigger' : '' }}">
                     <a href="javascript:void(0)" class="nav-link">

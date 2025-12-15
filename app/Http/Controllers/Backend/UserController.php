@@ -149,7 +149,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $member = Member::find($id);
+        $member = User::find($id);
 
         if ($member) {
             $member->delete();

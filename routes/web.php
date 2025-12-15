@@ -12,6 +12,8 @@ use App\Http\Controllers\QRCode\QRController;
 use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\WmManagementController;
+use App\Http\Controllers\Backend\PlansController;
+
 
 
 
@@ -76,12 +78,21 @@ Route::middleware('auth')->group(function () {
     Route::get('member-management/add', [Backend\UserController::class, 'addMemberManagement'])->name('member-management.add');
     Route::post('member-management', [Backend\UserController::class, 'updateMember'])->name('member-management.store');
     Route::get('member-management/edit/{id}', [Backend\UserController::class, 'memeberedit'])->name('member-management.edit');
-    // Route::get('member-list', [Backend\UserController::class, 'list'])->name('member-list');
     Route::post('member-list', [Backend\UserController::class, 'list'])->name('member-list');
     Route::post('member-status', [Backend\UserController::class, 'updateStatus'])->name('member-management.status');
-
-
     Route::post('member-management/delete', [Backend\UserController::class, 'destroy'])->name('member-management.delete');
+
+    // Plans
+    Route::get('plans', [Backend\PlansController::class, 'index'])->name('plans');
+    Route::get('plan/add', [Backend\PlansController::class, 'add'])->name('plan.add');
+    Route::post('plan/store', [Backend\PlansController::class, 'store'])->name('plan.store');
+    Route::post('plans-list', [Backend\PlansController::class, 'list'])->name('plans-list');
+    Route::post('plan-status', [Backend\PlansController::class, 'updateStatus'])->name('plan.status');
+    Route::get('plan/edit/{id}', [Backend\PlansController::class, 'planedit'])->name('plan.edit');
+    Route::post('plan/delete', [Backend\PlansController::class, 'destroy'])->name('plan.delete');
+
+
+
 
     // Qr-Managemnet-Routes
     Route::get('qr-management', [QRController::class, 'index'])->name('qr-management');

@@ -68,6 +68,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css'>
 
+    <link rel="stylesheet" href="{{ asset('css/rich-text-editor.css') }}">
+
 
     <script type="text/javascript">
         var admin_url = "{{ url('/') }}/admin/";
@@ -250,6 +252,8 @@
     <script src="{{ asset('assets/datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+     <script src="{{ asset('js/rich-text-editor.js') }}"></script>
+
 
 
     <script>
@@ -297,6 +301,27 @@
                 autoUnmask: true
             });
             $('.phone-imput-mask').inputmask('9999999999');
+
+            Inputmask({
+                alias: 'numeric',
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 2,
+                digitsOptional: false,
+                prefix: '₹ ',
+                placeholder: '0',
+                rightAlign: false,
+                removeMaskOnSubmit: true
+            }).mask('#plan_price');
+
+            Inputmask({
+                alias: 'numeric',
+                digits: 0,          // no decimals
+                allowMinus: false,  // no negative
+                rightAlign: false,
+                placeholder: '0',
+                removeMaskOnSubmit: true
+            }).mask('#message_limit');
 
         });
         $(document).ready(function() {
