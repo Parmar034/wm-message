@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('member-management/plan-assign/{id}', [Backend\UserController::class, 'plan_assign'])->name('member-plan.assign');
     Route::post('plan-assign-store', [Backend\UserController::class, 'assign_store'])->name('member-plan.assign.store');
     Route::get('/member-export-excel', [Backend\UserController::class, 'exportExcel'])->name('member.export.excel');
+    Route::post('member/plan-history', [Backend\UserController::class, 'planHistory'])->name('member.plan.history');
 
     
 

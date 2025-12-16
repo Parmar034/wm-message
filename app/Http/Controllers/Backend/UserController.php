@@ -66,6 +66,16 @@ class UserController extends Controller
             $item['ser_id'] = $counter++;
             $item['member_checkbox'] = '<input type="checkbox" class="member_checkbox" name="selected_items[]" value="' . $item->id . '">';
 
+            $item['phone_number'] = '<a href="javascript:void(0);"
+                    class="table-btn table-btn1 plan_history openPlanHistoryModal"
+                    data-user-id="'.$item->id.'"
+                    data-user-name="'.$item->name.'">
+                    <span class="pcoded-micon">
+                        '. $item->phone .'
+                    </span>
+                </a>';
+
+
           $item['assign_plan'] = isset($item->latestSubscription->plan->plan_name) ? $item->latestSubscription->plan->plan_name : '-';
           $item['start_date'] = isset($item->latestSubscription->start_date)
                 ? Carbon::parse($item->latestSubscription->start_date)->format('d-m-Y')
@@ -368,5 +378,33 @@ class UserController extends Controller
 
         return Excel::download(new MemberExport($filters), 'members.xlsx');
     }
+
+    public function planHistory(Request $request)
+    {
+        $subscriptions = Subscription::with('plan')
+            ->where('user_id', $request->user_id)
+            ->orderByDesc('id')
+            ->get();
+
+        $data = [];
+        $i = 1;
+
+        foreach ($subscriptions as $sub) {
+            $data[] = [
+                'sr_no'      => $i++,
+                'plan_name'  => $sub->plan->plan_name ?? '-',
+                'start_date' => $sub->start_date
+                                    ? \Carbon\Carbon::parse($sub->start_date)->format('d-m-Y')
+                                    : '-',
+                'end_date'   => $sub->end_date
+                                    ? \Carbon\Carbon::parse($sub->end_date)->format('d-m-Y')
+                                    : '-',
+                'status'     => ucfirst($sub->status),
+            ];
+        }
+
+        return response()->json(['data' => $data]);
+    }
+
 
 }

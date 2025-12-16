@@ -3,7 +3,7 @@
     .dataTables_wrapper .dataTables_filter{
         float: left !important;
     }
-    #memberlist_filter label{width: 100%;  margin-bottom: 0px !important}
+    #memberlist_filter label{margin-bottom: 0px !important; font-size: 14px; float: left; padding-bottom: 5px;}
     #memberlist_filter {transform: translateY(-30px);}
     .table-responsive {overflow-x: unset !important;}
     #memberlist_filter .search-input{
@@ -16,6 +16,12 @@
         padding: 8px 30px 8px 50px !important;
         background-color: #fff !important;
         border: 1px solid #ced4da;
+    }
+    .dataTables_filter #memberlist_filter .filter-group label{
+        font-size: 14px !important;
+    }
+    #exportExcelBtn{
+        margin-top: 25px;
     }
 
 
@@ -68,6 +74,7 @@
                                                    
                                                 </tbody>
                                             </table>
+                                            
 
                                                 <select id="planFilter" class="form-select search-dropdown d-none">
                                                     <option value="">All Plans</option>
@@ -86,7 +93,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -95,12 +102,14 @@
     </div>
 
     @include('frontend.member-management.plan-assign-modal')
+    @include('frontend.member-management.plan-history-modal')
 @endsection
 @section('script')
 
     <script>
         $(document).ready(function() {
             var token = $("meta[name='csrf-token']").attr("content");
+            let planHistoryTable;
             var isSelectAll;
             var member_table = $('#memberlist').DataTable({
                 responsive: true,
@@ -157,8 +166,8 @@
                     // searchable: false
                 },
                 {
-                    data: 'phone',
-                    name: 'phone',
+                    data: 'phone_number',
+                    name: 'phone_number',
                     // orderable: false,
                     // searchable: false
                 },
@@ -223,13 +232,61 @@
                         $('.member_checkbox').prop('checked', true);
                     }
                 });
+            // $('.dataTables_filter input').attr('placeholder', 'Search here ...');
+            // $('#memberlist_filter').addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12');
+            // $('#memberlist_filter input').addClass('search-input');
+            // $('#memberlist_filter').addClass('d-flex justify-content-end align-items-center gap-2');
+            // $('#planFilter').removeClass('d-none').appendTo('#memberlist_filter');
+            // $('#fromDate').removeClass('d-none').appendTo('#memberlist_filter');
+            // $('#toDate').removeClass('d-none').appendTo('#memberlist_filter');
+            // $('#exportExcelBtn').removeClass('d-none').appendTo('#memberlist_filter');
             $('.dataTables_filter input').attr('placeholder', 'Search here ...');
-            $('#memberlist_filter').addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12');
-            $('#memberlist_filter input').addClass('search-input');
-            $('#memberlist_filter').addClass('d-flex justify-content-end align-items-center gap-2');
-            $('#planFilter').removeClass('d-none').appendTo('#memberlist_filter');
-            $('#fromDate').removeClass('d-none').appendTo('#memberlist_filter');
-            $('#toDate').removeClass('d-none').appendTo('#memberlist_filter');
+            $('.dataTables_filter input').addClass('search-input');
+
+            $('#memberlist_filter')
+                .addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12 d-flex gap-3');
+
+            const searchWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                </div>
+            `;
+
+            // Plan Filter Wrapper
+            const planFilterWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Plans</label>
+                </div>
+            `;
+
+            // Date Filter Wrapper
+            const fromDateWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Expiry From Date</label>
+                </div>
+            `;
+
+            const toDateWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Expiry To Date</label>
+                </div>
+            `;
+
+            $('#memberlist_filter').prepend(searchWrap);
+            $('#memberlist_filter .filter-group:first')
+                .append($('.dataTables_filter input'));
+
+            // Append wrappers
+            $('#memberlist_filter').append(planFilterWrap);
+            $('#memberlist_filter .filter-group:last').append($('#planFilter').removeClass('d-none'));
+
+            $('#memberlist_filter').append(fromDateWrap);
+            $('#memberlist_filter .filter-group:last').append($('#fromDate').removeClass('d-none'));
+
+            $('#memberlist_filter').append(toDateWrap);
+            $('#memberlist_filter .filter-group:last').append($('#toDate').removeClass('d-none'));
+
+            // Export Button
             $('#exportExcelBtn').removeClass('d-none').appendTo('#memberlist_filter');
 
 
@@ -469,6 +526,60 @@
             let modal = new bootstrap.Modal(document.getElementById('assignPlanModal'));
             modal.show();
         });
+
+        
+
+        $(document).on('click', '.openPlanHistoryModal', function () {
+
+            let userId   = $(this).data('user-id');
+            let userName = $(this).data('user-name');
+
+            $('#planUserName').text(userName);
+
+            // Destroy previous DataTable (IMPORTANT)
+            if ($.fn.DataTable.isDataTable('#planHistoryTable')) {
+                planHistoryTable.destroy();
+                $('#planHistoryTable tbody').empty();
+            }
+
+            // Initialize DataTable
+            planHistoryTable = $('#planHistoryTable').DataTable({
+                responsive: true,
+                processing: true,
+                searching: false,
+                paging: false,
+                info: false,
+                ajax: {
+                    url: "{{ route('member.plan.history') }}",
+                    type: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        user_id: userId
+                    }
+                },
+                columns: [
+                    { data: 'sr_no' },
+                    { data: 'plan_name' },
+                    { data: 'start_date' },
+                    { data: 'end_date' },
+                    { data: 'status' }
+                ],
+                rowCallback: function (row, data) {
+                 
+                    if (data.status == 'Active') {
+                        $(row).css('cssText', 'background-color: #e6ffed !important;');
+                    } else {
+                        $(row).css('cssText', 'background-color: #ffe5e5 !important;');
+                    }
+                    
+                }
+            });
+
+            // Open modal
+            let modal = new bootstrap.Modal(document.getElementById('openPlanHistoryModal'));
+            modal.show();
+        });
+
 
 
         // Show plan details inside modal
