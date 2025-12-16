@@ -16,36 +16,6 @@ class UserManagementController extends Controller
         return view('frontend.user-management.index');
     }
 
-    // public function list(Request $request)
-    // {
-    //     $query = Member::query();
-
-    //     if ($request->get('search')) {
-    //         $search = $request->get('search');
-    //         $query->where(function ($q) use ($search) {
-    //             $q->where('member_code', 'like', "%$search%")
-    //                 ->orWhere('member_name', 'like', "%$search%")
-    //                 ->orWhere('phone', 'like', "%$search%")
-    //                 ->orWhere('location', 'like', "%$search%");
-    //         });
-    //     }
-
-    //     $members = $query->get();
-
-    //     if ($members->count()) {
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'Members list found successfully.',
-    //             'data' => $members
-    //         ]);
-    //     }
-
-    //     return response()->json([
-    //         'status' => false,
-    //         'message' => 'No members found.',
-    //     ]);
-    // }
-
     public function list(Request $request)
     {
         $perPage = $request->input('length', 10);
@@ -211,5 +181,11 @@ class UserManagementController extends Controller
             'status' => 1,
             'message' => 'Message sent successfully!'
         ]);
+    }
+
+    public function exportExcel(Request $request) {
+
+        dd($request->all());
+        
     }
 }

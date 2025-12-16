@@ -11,6 +11,8 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MemberExport;
 
 class UserController extends Controller
 {
@@ -23,17 +25,46 @@ class UserController extends Controller
 
     public function list(Request $request)
     {
-        $member_list = User::where('role', 'Admin')
-            ->with(['latestSubscription.plan'])
-            ->get()
-            ->sortByDesc(fn ($user) => optional($user->latestSubscription)->id)
-            ->values();
+        // $member_list = User::where('role', 'Admin')
+        //     ->with(['latestSubscription.plan'])
+        //     ->get()
+        //     ->sortByDesc(fn ($user) => optional($user->latestSubscription)->id)
+        //     ->values();
+
+            $query = User::where('role', 'Admin')
+                ->with(['latestSubscription.plan']);
+
+            if ($request->plan_filter === 'Unassigned Members') {
+                $query->whereDoesntHave('latestSubscription');
+            } elseif (!empty($request->plan_filter)) {
+                $query->whereHas('latestSubscription.plan', function ($q) use ($request) {
+                    $q->where('plan_name', $request->plan_filter);
+                });
+            }
+
+
+            if (!empty($request->from_date)) {
+                $query->whereHas('latestSubscription', function ($q) use ($request) {
+                    $q->whereDate('end_date', '>=', $request->from_date);
+                });
+            }
+
+            if (!empty($request->to_date)) {
+                $query->whereHas('latestSubscription', function ($q) use ($request) {
+                    $q->whereDate('end_date', '<=', $request->to_date);
+                });
+            }
+
+            $member_list = $query->get()
+                ->sortByDesc(fn ($user) => optional($user->latestSubscription)->id)
+                ->values();
 
         $counter = 1;
 
         $member_list->transform(function ($item) use (&$counter) {
 
             $item['ser_id'] = $counter++;
+            $item['member_checkbox'] = '<input type="checkbox" class="member_checkbox" name="selected_items[]" value="' . $item->id . '">';
 
           $item['assign_plan'] = isset($item->latestSubscription->plan->plan_name) ? $item->latestSubscription->plan->plan_name : '-';
           $item['start_date'] = isset($item->latestSubscription->start_date)
@@ -309,6 +340,33 @@ class UserController extends Controller
             'status' => true,
             'message' => 'Plan assigned successfully'
         ]);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        // Determine selected items
+        $selectedItems = $request->selectedItems === 'all'
+            ? 'all'
+            : explode(',', $request->selectedItems);
+
+        // Prepare filters array
+        $filters = [
+            'selected_items' => $selectedItems,
+            'plan_filter'    => $request->plan_filter ?? null,
+            'from_date'      => $request->from_date ?? null,
+            'to_date'        => $request->to_date ?? null,
+            'column_name'    => [
+                'Name',
+                'Email',
+                'Phone',
+                'Assigned Plan',
+                'Start Date',
+                'End Date',
+                'Status'
+            ],
+        ];
+
+        return Excel::download(new MemberExport($filters), 'members.xlsx');
     }
 
 }

@@ -6,7 +6,7 @@
     #memberlist_filter label{width: 100%;  margin-bottom: 0px !important}
     #memberlist_filter {transform: translateY(-30px);}
     .table-responsive {overflow-x: unset !important;}
-    #memberlist_filter input{
+    #memberlist_filter .search-input{
         margin-left: 0px;
         border-radius: 0px;
         background-image: url(https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/magnifying-glass.svg) !important;
@@ -41,6 +41,7 @@
                                 </div>
                             </div> -->
                         </div>
+                   
                         <div class="row gx-4 px-3">
                             <div class="col-xl-12 col-md-12 dashboard_users px-0">
                                 <div>
@@ -50,6 +51,7 @@
                                                 aria-describedby="member_info">
                                                 <thead>
                                                     <tr style="background-color: #E1EBF4 !important;">
+                                                        <th style="padding-left: 24px;"><input type="checkbox" id="select_all"></th>
                                                         <th>Sr&nbsp;No.</th>
                                                         <th>Name</th>
                                                         <th>Email</th>
@@ -66,6 +68,21 @@
                                                    
                                                 </tbody>
                                             </table>
+
+                                                <select id="planFilter" class="form-select search-dropdown d-none">
+                                                    <option value="">All Plans</option>
+                                                    <option value="Unassigned Members">Unassigned Members</option>
+
+                                                    @foreach($plans as $plan)
+                                                        <option value="{{ $plan->plan_name }}">{{ $plan->plan_name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <input type="date" id="fromDate" class="form-control d-none" placeholder="From Date">
+                                                <input type="date" id="toDate" class="form-control d-none" placeholder="To Date">
+                                                <!-- <a href="" class="add-article-btn" id="exportExcelBtn"><i class="fas fa-file-excel"
+                                                                        style="font-size: 35px;"></i></a> -->
+                                                <a class="ml-3" id="exportExcelBtn" style="cursor: pointer;"><i class="fas fa-file-excel" style="font-size: 35px;"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -84,6 +101,7 @@
     <script>
         $(document).ready(function() {
             var token = $("meta[name='csrf-token']").attr("content");
+            var isSelectAll;
             var member_table = $('#memberlist').DataTable({
                 responsive: true,
                 language: {
@@ -102,12 +120,27 @@
                 ajax: {
                     url: "member-list",
                     type: 'post',
-                    data: {
-                        _token: token,
+                    data: function (d) {
+                        d._token = token;
+                        d.plan_filter = $('#planFilter').val();
+                        d.from_date = $('#fromDate').val();
+                        d.to_date = $('#toDate').val();
                     },
+                    "dataSrc": function(response) {
+                            isSelectAll = $('#select_all').is(':checked');
+                            return response.data;
+                        }
                 },
 
                 columns: [{
+                    data: 'member_checkbox',
+                    name: 'member_checkbox',
+                    orderable: false,
+                    searchable: false,
+                    // render: function (data, type, row) {
+                    //     return `<input type="checkbox" class="member-checkbox" value="${row.id}">`;
+                    // }
+                },{
                     data: 'ser_id',
                     name: 'id',
                 },
@@ -179,12 +212,25 @@
                         }
                     }
                 }
+                
                  
 
             });
+
+            member_table.on('draw', function () {
+                    $('[data-toggle="popover"]').popover();
+                    if (isSelectAll) {
+                        $('.member_checkbox').prop('checked', true);
+                    }
+                });
             $('.dataTables_filter input').attr('placeholder', 'Search here ...');
-            $('#memberlist_filter').addClass('search-box col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12');
+            $('#memberlist_filter').addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12');
             $('#memberlist_filter input').addClass('search-input');
+            $('#memberlist_filter').addClass('d-flex justify-content-end align-items-center gap-2');
+            $('#planFilter').removeClass('d-none').appendTo('#memberlist_filter');
+            $('#fromDate').removeClass('d-none').appendTo('#memberlist_filter');
+            $('#toDate').removeClass('d-none').appendTo('#memberlist_filter');
+            $('#exportExcelBtn').removeClass('d-none').appendTo('#memberlist_filter');
 
 
             $(document).on('click', '.delete-member-btn', function(e) {
@@ -197,7 +243,7 @@
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Yes, Delete"
-                }).then((result) => {
+                }).then((result) => {   
                     if (result.isConfirmed) {
                         $.ajax({
                             url: "member-management/delete",
@@ -218,6 +264,19 @@
                         });
                     }
                 });
+            });
+
+            $(document).on('click', '#select_all', function(e) {
+                var isChecked = $(this).prop('checked');
+                $('.member_checkbox').prop('checked', isChecked);
+            });
+
+            $('#fromDate, #toDate').on('click focus', function () {
+                this.showPicker(); 
+            });
+
+            $('#planFilter, #fromDate, #toDate').on('change', function () {
+                member_table.ajax.reload();
             });
 
             $(document).on('submit', '#assignPlanModal form', function (e) {
@@ -288,6 +347,51 @@
 
 
         });
+
+        $(document).on('click', '#exportExcelBtn', function () {
+
+            // Get filter values FIRST
+            var planFilter = $('#planFilter').val() || '';
+            var fromDate   = $('#fromDate').val() || '';
+            var toDate     = $('#toDate').val() || '';
+
+            // Check Select All checkbox
+            var isSelectAll = $('#select_all').is(':checked');
+
+            var selectedItemsString = '';
+
+            if (isSelectAll) {
+                // Special flag for backend
+                selectedItemsString = 'all';
+            } else {
+                // Collect checked rows from DataTable (all pages)
+                var selectedItems = $('#memberlist')
+                    .DataTable()
+                    .$('input[name="selected_items[]"]:checked')
+                    .map(function () {
+                        return $(this).val();
+                    }).get();
+
+                if (selectedItems.length === 0 && !planFilter && !fromDate && !toDate) {
+                    alert('No members selected or filters applied.');
+                    return;
+                }
+
+                selectedItemsString = selectedItems.join(',');
+            }
+
+            // Build export URL
+            var exportUrl = "{{ route('member.export.excel') }}"
+                + "?selectedItems=" + encodeURIComponent(selectedItemsString)
+                + "&plan_filter=" + encodeURIComponent(planFilter)
+                + "&from_date=" + encodeURIComponent(fromDate)
+                + "&to_date=" + encodeURIComponent(toDate);
+
+            // Trigger Excel download
+            window.location.href = exportUrl;
+        });
+
+
 
         $(document).on('change', '.status-toggle', function () {
 

@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::post('member-management/delete', [Backend\UserController::class, 'destroy'])->name('member-management.delete');
     Route::get('member-management/plan-assign/{id}', [Backend\UserController::class, 'plan_assign'])->name('member-plan.assign');
     Route::post('plan-assign-store', [Backend\UserController::class, 'assign_store'])->name('member-plan.assign.store');
+    Route::get('/member-export-excel', [Backend\UserController::class, 'exportExcel'])->name('member.export.excel');
 
     
 
