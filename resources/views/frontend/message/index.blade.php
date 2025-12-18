@@ -135,7 +135,7 @@
              
                 },
                 { data: 'id' },
-                { data: 'member_name' },
+                { data: 'member_name',visible: {{ Auth::user()->role != 'Admin' ? 'true' : 'false' }}, },
                 { data: 'user_name' },
                 { data: 'phone' },
                 { data: 'message_text' },
@@ -181,8 +181,10 @@
                 .append($('.dataTables_filter input'));
 
             // Append wrappers
+            @if(Auth::user()->role != 'Admin')
             $('#massagelist_filter').append(membersFilterWrap);
             $('#massagelist_filter .filter-group:last').append($('#membersFilter').removeClass('d-none'));
+            @endif
 
             $('#massagelist_filter').append(usersFilterWrap);
             $('#massagelist_filter .filter-group:last').append($('#usersFilter').removeClass('d-none'));

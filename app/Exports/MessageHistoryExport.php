@@ -77,6 +77,10 @@ class MessageHistoryExport implements FromCollection, WithCustomStartCell,  With
             $collection = $collection->whereIn('message_id', $this->data['selected_items']);
         }
 
+        if(Auth::user()->role == 'Admin'){
+            $collection = $collection->where('member_id', Auth::user()->id);
+        }
+
 
         if (!empty($member_id)) {
             $collection = $collection->where('member_id', (int) $member_id);

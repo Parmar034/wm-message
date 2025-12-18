@@ -14,6 +14,8 @@ use DB;
 use Carbon\Carbon;
 use App\Exports\MessageHistoryExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class MessageController extends Controller
@@ -40,7 +42,7 @@ class MessageController extends Controller
         // 1️⃣ Load data (OK for small datasets)
         $messages = Message::with(['userMembers.user'])
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get();  
 
         // 2️⃣ Build flat array
         $data = [];
@@ -73,6 +75,10 @@ class MessageController extends Controller
                     || str_contains(strtolower($row['user_name'] ?? ''), strtolower($search))
                     || str_contains(strtolower($row['phone'] ?? ''), strtolower($search));
             });
+        }
+
+        if(Auth::user()->role == 'Admin'){
+            $collection = $collection->where('member_id', Auth::user()->id);
         }
 
         if (!empty($member_id)) {
@@ -171,19 +177,29 @@ class MessageController extends Controller
             ? 'all'
             : explode(',', $request->selectedItems);
 
+            if(Auth::user()->role == 'Admin'){
+                $column_name = [
+                    'User Name',
+                    'Phone',
+                    'Message',
+                    'Created At'
+                ];
+            }else{
+                $column_name = [
+                    'Member Name',
+                    'User Name',
+                    'Phone',
+                    'Message',
+                    'Created At'
+                ];
+            }
+
         // Prepare filters array
         $filters = [
             'selected_items' => $selectedItems,
             'members_filter'    => $request->members_filter ?? null,
             'users_filter'      => $request->users_filter ?? null,
-            'column_name'    => [
-                'Member Name',
-                'User Name',
-                'Phone',
-                'Message',
-                'Created At'
-               
-            ],
+            'column_name'    => $column_name,
         ];
 
         return Excel::download(new MessageHistoryExport($filters), 'message-historys.xlsx');
