@@ -3,10 +3,10 @@
     .dataTables_wrapper .dataTables_filter{
         float: left !important;
     }
-    #memberlist_filter label{width: 100%;  margin-bottom: 0px !important}
-    #memberlist_filter {transform: translateY(-30px);}
+    #massagelist_filter label{margin-bottom: 0px !important; font-size: 14px; float: left; padding-bottom: 5px;}
+    #massagelist_filter {transform: translateY(-30px);}
     .table-responsive {overflow-x: unset !important;}
-    #memberlist_filter input{
+    #massagelist_filter .search-input{
         margin-left: 0px;
         border-radius: 0px;
         background-image: url(https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/magnifying-glass.svg) !important;
@@ -17,114 +17,15 @@
         background-color: #fff !important;
         border: 1px solid #ced4da;
     }
-    .send-message-btn{
-        color: #fff !important;
-        margin-left: 15px;
+    .dataTables_filter #massagelist_filter .filter-group label{
+        font-size: 14px !important;
     }
-    .suggest-box-name {
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        max-height: 180px;
-        overflow-y: auto;
-        background: #fff;
-        display: none;
-        padding: 8px;
-        border-radius: 5px;
-        position: absolute;
-        /*display: block;*/
-        z-index: 9999;
-        /* max-width: 100%; */
-        width: 94%
-    }
-    .suggest-box-phone {
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        max-height: 180px;
-        overflow-y: auto;
-        background: #fff;
-        display: none;
-        padding: 8px;
-        border-radius: 5px;
-        position: absolute;
-        /*display: block;*/
-        z-index: 9999;
-        /* max-width: 100%; */
-        width: 94%
+    #exportExcelBtn{
+        margin-top: 25px;
     }
 
 
-    .suggest-item-name{
-        padding: 6px;
-        cursor: pointer;
-    }
 
-    .suggest-item-name:hover {
-        background: #f2f2f2;
-    }
-
-    .suggest-item-phone{
-        padding: 6px;
-        cursor: pointer;
-    }
-
-    .suggest-item-phone:hover {
-        background: #f2f2f2;
-    }
-    .input-wrapper {
-        position: relative;
-        width: 100%;
-    }
-
-    .clear-icon {
-        position: absolute;
-        right: 25px;
-        top: 45%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        font-size: 20px;
-        color: #888;
-        display: none;
-    }
-
-    .clearable:not(:placeholder-shown) + .clear-icon {
-        display: block;
-    }
-    .filter-search{
-        width: 100%;
-        padding: 8px 10px 8px 20px;
-        font-size: 16px;
-        outline: none;
-        background: #fff;
-        border: none;
-        color: #737791;
-        /* margin-left: 10px; */
-        border: 1px solid #ced4da;
-    }
-
-    .suggest-item-name.no-click,
-    .suggest-item-phone.no-click {
-        cursor: default;
-        color: #999;
-        background: #f9f9f9;
-    }
-
-    .serach-img input{
-        margin-left: 0px;
-        border-radius: 0px;
-        background-image: url(https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/magnifying-glass.svg) !important;
-        background-size: 18px !important;
-        background-position: 10px center !important;
-        background-repeat: no-repeat !important;
-        padding: 8px 30px 8px 50px !important;
-        background-color: #fff !important;
-        border: 1px solid #ced4da;
-    }
-    .button-mrg{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
 </style>
 
 @section('main_content')
@@ -137,33 +38,6 @@
                             <div class="dashboard-heading">
                                 <h4>Message History</h4> 
                             </div>
-                            <div class="row">
-                                <div class="col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12">
-                                    <div class="input-wrapper serach-img">
-                                        <input type="text" id="filter_name" placeholder="Search Name" name="name" class="filter-search clearable mb-2">
-                                        <span class="clear-icon" data-target="filter_name">&times;</span>
-                                    </div>
-                                    <div id="nameSuggestions" class="suggest-box-name"></div>
-                                </div>
-                                <div class="col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12">
-                                    <div class="input-wrapper serach-img">
-                                        <input type="text" id="filter_phone" placeholder="Search Phone" name="phone" class="filter-search clearable mb-2">
-                                        <span class="clear-icon" data-target="filter_phone">&times;</span>
-                                    </div>   
-                                    <div id="phoneSuggestions" class="suggest-box-phone"></div>
-                                </div>
-                                 <div class="col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12 button-mrg">
-                                    <!-- <a href="javascript:void(0)" class="" id="clearFilter" style="color: #ff0000;">&times; </a> -->
-                                    <div>
-                                        <a href="" class="add-article-btn me-2" id="filter">Filter</a>
-                                        <span id="clearFilter" style="color: #ff0000; cursor: pointer; display: none;" >&times; Clear</span>
-                                        
-                                    </div>
-                                    
-                                    <a href="" class="add-article-btn" id="exportExcelBtn">Export</a>
-                                </div>
-                                
-                            </div>
                         </div>
                         <div class="row gx-4 px-3">
                             <div class="col-xl-12 col-md-12 dashboard_users px-0">
@@ -174,7 +48,9 @@
                                                 aria-describedby="member_info">
                                                 <thead>
                                                     <tr style="background-color: #E1EBF4 !important;">
+                                                        <th style="padding-left: 24px;"><input type="checkbox" id="select_all"></th>
                                                         <th>Sr&nbsp;No.</th>
+                                                        <th>MEMBER</th>
                                                         <th>NAME</th>
                                                         <th>PHONE&nbsp;NUMBER</th>
                                                         <th>MESSAGE</th>
@@ -185,6 +61,24 @@
                                                    
                                                 </tbody>
                                             </table>
+
+                                                <select id="membersFilter" class="form-select search-dropdown d-none">
+                                                    <option value="">All Members</option>
+                                                    @foreach($members as $member)
+                                                        <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <select id="usersFilter" class="form-select search-dropdown d-none">
+                                                    <option value="">All Users</option>
+                                                    @foreach($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->member_name }}</option>
+                                                    @endforeach
+                                                </select>
+
+
+                                                <a class="ml-3" id="exportExcelBtn" style="cursor: pointer;"><i class="fas fa-file-excel" style="font-size: 35px;"></i></a>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -201,12 +95,22 @@
 
     $(document).ready(function () {
         var token = $("meta[name='csrf-token']").attr("content");
+        var isSelectAll;
 
         var table = $('#massagelist').DataTable({
             responsive: true,
+            language: {
+                        search: "",
+                        // "searchPlaceholder": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i> Search here ...',
+                        "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i>',
+                        paginate: {
+                        next: '&gt;', // or '→'
+                        previous: '&lt;' // or '←' 
+                    }
+                },
             processing: true,
             serverSide: true,
-            searching: false,
+            searching: true,
             lengthChange: false,
             pageLength: 10,
             ajax: {
@@ -214,180 +118,166 @@
                 type: "POST",
                 data: function (d) {
                     d._token = token;
-                    d.name = $("#filter_name").val();
-                    d.phone = $("#filter_phone").val();
-                }
+                    d.member_id = $('#membersFilter').val();
+                    d.user_id = $('#usersFilter').val();
+                },
+                "dataSrc": function(response) {
+                            isSelectAll = $('#select_all').is(':checked');
+                            return response.data;
+                        }
             },
             columns: [
+                {
+                    data: 'member_checkbox',
+                    name: 'member_checkbox',
+                    orderable: false,
+                    searchable: false,
+             
+                },
                 { data: 'id' },
                 { data: 'member_name' },
+                { data: 'user_name' },
                 { data: 'phone' },
                 { data: 'message_text' },
                 { data: 'created_at' },
             ]
         });
 
-        $("#clearFilter").click(function () {
+        table.on('draw', function () {
+                    $('[data-toggle="popover"]').popover();
+                    if (isSelectAll) {
+                        $('.member_checkbox').prop('checked', true);
+                    }
+                });
 
-            $("#filter_name").val('');
-            $("#filter_phone").val('');
+        $('.dataTables_filter input').attr('placeholder', 'Search here ...');
+        $('.dataTables_filter input').addClass('search-input');
+        $('#massagelist_filter').addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12 d-flex gap-3');    
 
-            table.ajax.reload(); 
-        });
+             const searchWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                </div>
+            `;
+
+            // Members Filter Wrapper
+            const membersFilterWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Members</label>
+                </div>
+            `;
+
+            // Date Filter Wrapper
+            const usersFilterWrap = `
+                <div class="filter-group">
+                    <label class="filter-label">Users</label>
+                </div>
+            `;
 
 
 
-    function searchSuggestions(which) {
-        let name = $("#filter_name").val();
-        let phone = $("#filter_phone").val();
+            $('#massagelist_filter').prepend(searchWrap);
+            $('#massagelist_filter .filter-group:first')
+                .append($('.dataTables_filter input'));
 
-        // If both empty → reload table
-        if (!name && !phone) {
-            table.ajax.reload(null, false);
-            $("#nameSuggestions, #phoneSuggestions").hide();
-            return;
-        }
-            clearFilterToggle();
+            // Append wrappers
+            $('#massagelist_filter').append(membersFilterWrap);
+            $('#massagelist_filter .filter-group:last').append($('#membersFilter').removeClass('d-none'));
 
-        $.post("{{ route('message.search-get') }}", {
-            _token: token,
-            name: name,
-            phone: phone
-        }, function(res) {
+            $('#massagelist_filter').append(usersFilterWrap);
+            $('#massagelist_filter .filter-group:last').append($('#usersFilter').removeClass('d-none'));
 
-            // NAME search suggestions
-            if (which === "name") {
-                if (name !== "") {
-                    let html = res.data.length
-                        ? res.data.map(m =>
-                            `<div class="suggest-item-name" data-name="${m.member_name}" data-phone="${m.phone}">
-                                ${m.member_name}
-                            </div>`
-                          ).join('')
-                        : `<div class="suggest-item-name no-click">No results found</div>`;
+            // Export Button
+            $('#exportExcelBtn').removeClass('d-none').appendTo('#massagelist_filter');
 
-                    $("#nameSuggestions").html(html).show();
-                } else {
-                    $("#nameSuggestions").hide();
+
+        $(document).on('change', '#membersFilter', function () {
+
+            let member_id = $(this).val();
+
+            $.ajax({
+                url: "{{ route('get.user.list') }}",
+                type: "POST",
+                data: {
+                    member_id: member_id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    console.log(data);
+                    let users = data.users;
+                    let usersFilter = $('#usersFilter');
+                    usersFilter.empty();
+                    usersFilter.append('<option value="">All Users</option>');
+                    users.forEach(function(user) {
+                        usersFilter.append('<option value="' + user.id + '">' + user.member_name + '</option>');
+                    });
+                    usersFilter.trigger('change');  
+                    table.ajax.reload();
+                },
+                error: function () {
+                    toastr.error("Failed to fetch users!");
+        
                 }
-                $("#phoneSuggestions").hide();
-            }
+            });
+        });
 
-            // PHONE search suggestions
-            if (which === "phone") {
-                if (phone !== "") {
-                    let html2 = res.data.length
-                        ? res.data.map(m =>
-                            `<div class="suggest-item-phone" data-name="${m.member_name}" data-phone="${m.phone}">
-                                ${m.phone}
-                            </div>`
-                          ).join('')
-                        : `<div class="suggest-item-phone no-click">No results found</div>`;
+        $(document).on('click', '#select_all', function(e) {
+            var isChecked = $(this).prop('checked');
+            $('.member_checkbox').prop('checked', isChecked);
+        });
+        
 
-                    $("#phoneSuggestions").html(html2).show();
-                } else {
-                    $("#phoneSuggestions").hide();
+     
+
+
+     $(document).on('click', '#exportExcelBtn', function () {
+
+            var membersFilter = $('#membersFilter').val() || '';
+            var usersFilter = $('#usersFilter').val() || '';
+
+
+            // Check Select All checkbox
+            var isSelectAll = $('#select_all').is(':checked');
+
+            var selectedItemsString = '';
+
+            if (isSelectAll) {
+                // Special flag for backend
+                selectedItemsString = 'all';
+            } else {
+                // Collect checked rows from DataTable (all pages)
+                var selectedItems = $('#massagelist')
+                    .DataTable()
+                    .$('input[name="selected_items[]"]:checked')
+                    .map(function () {
+                        return $(this).val();
+                    }).get();
+
+                if (selectedItems.length === 0) {
+                    alert('No Message selected or filters applied.');
+                    return;
                 }
-                $("#nameSuggestions").hide();
+
+                selectedItemsString = selectedItems.join(',');
             }
-        });
-    }
 
-    // Input listeners
-    $("#filter_name").on("keyup", function () {
-        searchSuggestions("name");
+
+            // Build export URL
+            var exportUrl = "{{ route('message.history.export.excel') }}"
+                + "?selectedItems=" + encodeURIComponent(selectedItemsString)
+                + "&members_filter=" + encodeURIComponent(membersFilter)
+                + "&users_filter=" + encodeURIComponent(usersFilter);
+            // Trigger Excel download
+            window.location.href = exportUrl;
     });
 
-    $("#filter_phone").on("keyup", function () {
-        searchSuggestions("phone");
+    $(document).on('change', '#usersFilter', function () {
+         table.ajax.reload();
     });
 
-    // CLICK SUGGESTION → AUTO-FILL BOTH FIELDS
-    $(document).on("click", ".suggest-item-name, .suggest-item-phone", function () {
-        if ($(this).hasClass("no-click")) return;
 
-        let name = $(this).data("name");
-        let phone = $(this).data("phone");
-
-        $("#filter_name").val(name);
-        $("#filter_phone").val(phone);
-
-        $("#nameSuggestions").hide();
-        $("#phoneSuggestions").hide();
-
-        // table.ajax.reload(null, false);
-    });
-
-        $("#filter").on("click", function(e){
-            e.preventDefault();
-            table.ajax.reload();
-        });
-
-        $(document).click(function(e){
-            if(!$(e.target).closest('#filter_name, #filter_phone, .suggest-box-name,.suggest-box-phone').length){
-                $(".suggest-box-name,.suggest-box-phone").hide();
-            }
-        });
-    
-        $(document).on("click", ".clear-icon", function () {
-            let inputId = $(this).data("target");
-
-            $("#" + inputId).val("");
-clearFilterToggle();
-            // // Also trigger live search reset if using search
-            // $('#filter_name, #filter_phone').trigger('keyup');
-
-            // For DataTable reload
-            // table.ajax.reload(null, false);
-        });
-    });    
-
-
-    $('#exportExcelBtn').click(function (e) {
-        e.preventDefault(); 
-
-        let name  = $('#filter_name').val();
-        let phone = $('#filter_phone').val();
-
-        $.ajax({
-            url: "{{ route('export.messages') }}",
-            type: "POST",
-            data: {
-                name: name,
-                phone: phone,
-                _token: "{{ csrf_token() }}"
-            },
-            xhrFields: {
-                responseType: 'blob'
-            },
-            success: function (data) {
-                let blob = new Blob([data]);
-                let link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "message_user.xlsx";
-                link.click();
-                toastr.success("Export successful!");
-            },
-            error: function () {
-                 toastr.error("Export failed!");
-            }
-        });
-
-    });
-
-function clearFilterToggle(){
-
-        let name  = $('#filter_name').val();
-        let phone = $('#filter_phone').val();
-        if(name !== '' || phone !== ''){
-            $("#clearFilter").show();
-        }else{
-        $("#clearFilter").hide();
-
-        }
-}
-
-  $(document).on("change input", "#filter_name, #filter_phone", clearFilterToggle);
+ });  
+ 
    
 
 

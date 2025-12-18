@@ -156,6 +156,9 @@ Route::middleware('auth')->group(function () {
     Route::post('search', [Backend\MessageController::class, 'search_get'])->name('message.search-get');
     Route::post('filter', [Backend\MessageController::class, 'filter'])->name('message.filter');
     Route::post('export', [Backend\MessageController::class, 'exportMessages'])->name('export.messages');
+    Route::post('get-user-list', [Backend\MessageController::class, 'get_user_list'])->name('get.user.list');
+    Route::get('message/export-excel', [Backend\MessageController::class, 'exportMessages'])->name('message.history.export.excel');
+
 
     // Route::get('data', [Backend\MessageController::class, 'datastore'])->name('datastore');
 

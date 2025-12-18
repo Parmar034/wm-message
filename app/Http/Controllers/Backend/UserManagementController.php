@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\UserMember;
 use App\Models\SendMessage;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -193,19 +194,9 @@ class UserManagementController extends Controller
 
     public function send_message(Request $request)
     {
-        //     $member = new SendMessage();
-        //     $member->message_text = $request->message_text;
-        //     $member->user_members_id = $request->selectedItemsString;
-        //     $member->save();
-
-        // return response()->json([
-        //     'status' => 1,
-        //     'message' => 'Message sent successfully!'
-        // ]);
-
-
-        $member = new SendMessage();
-        $member->message_text = $request->message_text;
+        $member = new Message();
+        $member->message = $request->message_text;
+        $member->sender_id = Auth::id();
         $member->save(); 
 
         $member_ids = explode(',', $request->selectedItemsString);
