@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 @endif
-                <!-- @if(Auth::user()->role == 'SuerAdmin')
+                
                 <li
                     class="nav-item {{ in_array(\Request::route()->getName(), ['user-management', 'user-management.add', 'user-management.edit']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user-management') }}">
@@ -47,9 +47,9 @@
                         <span class="pcoded-mtext">User&nbsp;Management</span>
                     </a>
                 </li>
-                @endif
+                
 
-                @if(Auth::user()->role == 'SuerAdmin')
+                <!-- @if(Auth::user()->role == 'SuerAdmin')
                 <li
                     class="nav-item {{ in_array(\Request::route()->getName(), ['bulk-user.upload']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('bulk-user.upload') }}">
@@ -57,9 +57,9 @@
                         <span class="pcoded-mtext">Bulk&nbsp;Upload Users</span>
                     </a>
                 </li>
-                @endif
+                @endif -->
 
-                @if(Auth::user()->role == 'SuerAdmin')
+                
                 <li
                     class="nav-item {{ in_array(\Request::route()->getName(), ['message.index']) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('message.index') }}">
@@ -67,7 +67,7 @@
                         <span class="pcoded-mtext">Message&nbsp;History</span>
                     </a>
                 </li>
-                @endif -->
+                
 
                 <!-- <li class="nav-item pcoded-hasmenu {{ in_array(\Request::route()->getName(), ['user-management', 'user-management.add', 'user-management.edit', 'bulk-user.upload']) ? 'active pcoded-trigger' : '' }}">
                     <a href="javascript:void(0)" class="nav-link">

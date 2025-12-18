@@ -128,10 +128,13 @@ Route::middleware('auth')->group(function () {
     Route::get('user-management/add', [Backend\UserManagementController::class, 'addMemberManagement'])->name('user-management.add');
     Route::post('user-management', [Backend\UserManagementController::class, 'updateMember'])->name('user-management.store');
     Route::get('user-management/edit/{id}', [Backend\UserManagementController::class, 'memeberedit'])->name('user-management.edit');
-    // Route::get('user-list', [Backend\UserManagementController::class, 'list'])->name('user-list');
     Route::post('user-list', [Backend\UserManagementController::class, 'list'])->name('user-list');
     Route::post('user-management/delete', [Backend\UserManagementController::class, 'destroy'])->name('user-management.delete');
     Route::post('user-management/send-message', [Backend\UserManagementController::class, 'send_message'])->name('user-management.send-message');
+    Route::post('user-management-status', [Backend\UserManagementController::class, 'updateStatus'])->name('user-management.status');
+    Route::get('/user-export-excel', [Backend\UserManagementController::class, 'exportExcel'])->name('user.export.excel');
+
+
 
 
     // WM-Managemnet

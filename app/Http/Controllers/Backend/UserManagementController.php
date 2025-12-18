@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\UserMember;
 use App\Models\SendMessage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MemberUserExport;
+use Illuminate\Support\Facades\Auth;
 
 class UserManagementController extends Controller
 {
 
     public function memebrManagement()
     {
-        return view('frontend.user-management.index');
+        $members = User::where('role', 'Admin')->get();
+        return view('frontend.user-management.index', compact('members'));
     }
 
     public function list(Request $request)
@@ -21,13 +26,25 @@ class UserManagementController extends Controller
         $perPage = $request->input('length', 10);
         $page = $request->input('start', 0) / $perPage;
         $searchValue = $request->input('search.value');
-        $query = UserMember::orderBy('created_at', 'desc');
+        $query = UserMember::with('user')->orderBy('created_at', 'desc');
+
+        if (Auth::user()->role == 'Admin') {
+            $query->where('user_id', Auth::id());
+        }
+
 
         if (!empty($searchValue)) {
-            $query->where(function ($querys) use ($searchValue) {
-                $querys->where('member_name', 'LIKE', "%{$searchValue}%")
-                    ->orWhere('phone', 'LIKE', "%{$searchValue}%");
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('member_name', 'LIKE', "%{$searchValue}%")
+                ->orWhere('phone', 'LIKE', "%{$searchValue}%")
+                ->orWhereHas('user', function ($uq) use ($searchValue) {
+                    $uq->where('name', 'LIKE', "%{$searchValue}%");
+                });
             });
+        }
+
+        if (!empty($request->input('members_filter'))) {
+            $query->where('user_id', $request->input('members_filter'));
         }
 
         $totalRecords = $query->count();
@@ -39,6 +56,17 @@ class UserManagementController extends Controller
         $counter = $page * $perPage + 1;
         $member_list->transform(function ($item) use (&$counter) {
             $item['ser_id'] = $counter++;
+            $item['user_name'] = $item->user ? $item->user->name : '';
+            $item['user_phone'] = $item->country_code .' '. $item->phone ;
+
+            $checked = $item->status == 1 ? 'checked' : '';
+            $item['status'] =
+                '<div class="form-check form-switch">
+                    <input class="form-check-input status-toggle"
+                        type="checkbox"
+                        data-id="'.$item->id.'" '.$checked.'>
+                </div>';
+
             $item['member_checkbox'] = '<input type="checkbox" class="member_checkbox" name="selected_items[]" value="' . $item->id . '">';
             // $item['action'] = "-";
             $item['action'] = '<a href="' . route('user-management.edit',$item['id']) . '" class="table-btn table-btn1 service_edit"><span class="pcoded-micon"><img src="'. asset('assets/images/edit_icon.svg') .'" class="img-fluid white_logo" alt=""></span></a>';
@@ -57,83 +85,90 @@ class UserManagementController extends Controller
 
     public function addMemberManagement()
     {
-        return view('frontend.user-management.add');
+        $members = User::where('role','Admin')->get();
+        return view('frontend.user-management.add', compact('members'));
     }
 
     public function updateMember(Request $request)
     {
         $json = $request->expectsJson();
-        $rules = [
-            'member_name' => 'required|string|max:100',
-            'phone' => 'required|numeric',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-
-        $response = null;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required',
+        ]);
 
         if ($validator->fails()) {
-            if ($json) {
-                $response = response()->json([
-                    'status' => false,
-                    'message' => 'Validation Error',
-                    'errors' => $validator->errors()
-                ], 422);
-            } else {
-                // $response = to_route('member-management.add')
-                //     ->withErrors($validator)
-                //     ->withInput();
-                if(isset($request->member_id) && $request->member_id != ''){
-                    $response = to_route('user-management.edit', $request->member_id)
-                        ->withErrors($validator)
-                        ->withInput();
-                }else{
-                    $response = to_route('user-management.add')
-                        ->withErrors($validator)
-                        ->withInput();
-                }
-            }
-            return $response;
+            return redirect()->back()
+                ->withErrors($validator)    
+                ->withInput();
         }
 
-        if ($request->member_id) {
-            $member = UserMember::find($request->member_id);
+        if ($request->user_id) {
+            $member = UserMember::find($request->user_id);
             if (!$member) {
-                $response = $json
-                    ? response()->json(['status' => false, 'message' => 'UserMember not found.'], 404)
-                    : to_route('user-management')->with('error', 'UserMember not found.');
-                return $response;
+                $message = 'User not found.';
+                return $json
+                    ? response()->json(['status' => false, 'message' => $message], 404)
+                    : to_route('user-management')->with('error', $message);
             }
-                $data = $validator->validated();
-                $data['description'] = $request->description ?? '';
-
-                $save = $member->update($data);
+       
         } else {
-             $data = $validator->validated();
-             $data['description'] = $request->description ?? '';
-            $member = new UserMember($data);
-            $save = $member->save();
+            $member = new UserMember();
         }
+
+        $data['user_id'] = (Auth::user()->role === 'Super Admin') ? $request->member : Auth::id();
+        $data['member_name'] = $request->name;
+        $data['member_email'] = isset($request->email) ? $request->email : null;
+        $data['phone'] = isset($request->phone) ? $request->phone : null;
+        $data['country_code'] = isset($request->country_code) ? $request->country_code : null;
+        $data['description'] = isset($request->description) ? $request->description : null;
+
+
+        $member->fill($data);
+        $save = $member->save();
 
         if (!$save) {
-            $response = $json
-                ? response()->json(['status' => false, 'message' => 'Something went wrong.'])
-                : to_route('user-management')->with('error', 'Something went wrong while updating record');
-        } else {
-            $response = $json
-                ? response()->json(['status' => true, 'message' => 'UserMember saved successfully.'])
-                : to_route('user-management')->with('success', 'UserMember saved successfully.');
+            $message = 'Something went wrong while saving user.';
+            return $json
+                ? response()->json(['status' => false, 'message' => $message])
+                : to_route('user-management')->with('error', $message);
         }
 
-        return $response;
+        $message = 'User saved successfully.';
+        return $json
+            ? response()->json(['status' => true, 'message' => $message])
+            : to_route('user-management')->with('success', $message);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $user = UserMember::find($request->id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Status updated successfully'
+        ]);
     }
 
     public function memeberedit(string $id)
     {
         $member = UserMember::find($id);
+        $members = User::where('role','Admin')->get();
+
         if (!$member) {
             return to_route('user-management')->with('error', 'Member details not found');
         }
-        return view('frontend.user-management.add', ['member' => $member]);
+        return view('frontend.user-management.add', ['member' => $member, 'members' => $members]);
     }
 
     public function destroy(Request $request)
@@ -146,12 +181,12 @@ class UserManagementController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Member deleted successfully.',
+                'message' => 'User deleted successfully.',
             ]);
         } else {
             return response()->json([
                 'status' => 0,
-                'message' => 'Member not found.',
+                'message' => 'User not found.',
             ]);
         }
     }
@@ -185,7 +220,34 @@ class UserManagementController extends Controller
 
     public function exportExcel(Request $request) {
 
-        dd($request->all());
+        $selectedItems = $request->selectedItems === 'all'
+            ? 'all'
+            : explode(',', $request->selectedItems);
+            if(Auth::user()->role == 'Admin'){
+                $column_name = [
+                    'Name',
+                    'Email',
+                    'Phone',
+                    'Status'
+                ];
+            }else{
+                $column_name = [
+                    'Name',
+                    'Email',
+                    'Phone',
+                    'Member',
+                    'Status'
+                ];
+            }
+
+        // Prepare filters array
+        $filters = [
+            'selected_items' => $selectedItems,
+            'members_filter'    => $request->members_filter ?? null,
+            'column_name'    => $column_name,
+        ];
+
+        return Excel::download(new MemberUserExport($filters), 'members-user.xlsx');
         
     }
 }

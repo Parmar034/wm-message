@@ -3,10 +3,10 @@
     .dataTables_wrapper .dataTables_filter{
         float: left !important;
     }
-    #memberlist_filter label{width: 100%;  margin-bottom: 0px !important}
+    #memberlist_filter label{margin-bottom: 0px !important; font-size: 14px; float: left; padding-bottom: 5px;}
     #memberlist_filter {transform: translateY(-30px);}
     .table-responsive {overflow-x: unset !important;}
-    #memberlist_filter input{
+    #memberlist_filter .search-input{
         margin-left: 0px;
         border-radius: 0px;
         background-image: url(https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/magnifying-glass.svg) !important;
@@ -17,10 +17,18 @@
         background-color: #fff !important;
         border: 1px solid #ced4da;
     }
-    .send-message-btn{
-        color: #fff !important;
-        margin-left: 15px;
+    .dataTables_filter #memberlist_filter .filter-group label{
+        font-size: 14px !important;
     }
+    #exportExcelBtn{
+        margin-top: 25px;
+    }
+    .add-article-btn{
+        margin-left: 5px;
+        color: #fff !important;
+        cursor: pointer;
+    }
+
 
 
 
@@ -38,17 +46,7 @@
                                 <div><a href="{{ route('user-management.add') }}" class="add-article-btn">+ Add Member</a><a data-id='All'  class="add-article-btn send-message-btn">Send Message</a></div>
                                 
                             </div>
-                        <!--     <div class="dashboard-heading">
-                                <h4></h4>
-                                <a data-id='All'  class="add-article-btn send-message-btn">Send Message</a>
-                            </div> -->
-                            <!-- <div class="search-wrapper">
-                                <div class="search-box col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12">
-                                    <img src="{{ asset('assets/icons/search_icon.svg') }}" alt="Search"
-                                        class="search-icon">
-                                    <input type="text" class="search-input" placeholder="Search here...">
-                                </div>
-                            </div> -->
+       
                         </div>
                         <div class="row gx-4 px-3">
                             <div class="col-xl-12 col-md-12 dashboard_users px-0">
@@ -61,8 +59,10 @@
                                                     <tr style="background-color: #E1EBF4 !important;">
                                                         <th style="padding-left: 24px;"><input type="checkbox" id="select_all"></th>
                                                         <th>Sr&nbsp;No.</th>
+                                                        <th>Member</th>
                                                         <th>NAME</th>
                                                         <th>PHONE&nbsp;NUMBER</th>
+                                                        <th>STATUS</th>
                                                         <th>ACTIONS</th>
                                                     </tr>
                                                 </thead>
@@ -70,6 +70,15 @@
                                                    
                                                 </tbody>
                                             </table>
+
+                                                <select id="membersFilter" class="form-select search-dropdown d-none">
+                                                    <option value="">All Members</option>
+                                                    @foreach($members as $member)
+                                                        <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <a class="ml-3" id="exportExcelBtn" style="cursor: pointer;"><i class="fas fa-file-excel" style="font-size: 35px;"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -145,8 +154,9 @@
                 ajax: {
                     url: "user-list",
                     type: 'post',
-                    data: {
-                        _token: token,
+                    data: function (d) {
+                        d._token = token;
+                        d.members_filter = $('#membersFilter').val();
                     },
                     "dataSrc": function(response) {
                             isSelectAll = $('#select_all').is(':checked');
@@ -168,16 +178,27 @@
                     name: 'id',
                 },
                 {
+                    data: 'user_name',
+                    name: 'user_name',
+                    visible: {{ Auth::user()->role != 'Admin' ? 'true' : 'false' }},
+                },
+                {
                     data: 'member_name',
                     name: 'member_name',
                     // orderable: false,
                     // searchable: false
                 },
                 {
-                    data: 'phone',
-                    name: 'phone',
+                    data: 'user_phone',
+                    name: 'user_phone',
                     // orderable: false,
                     // searchable: false
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'action',
@@ -196,6 +217,40 @@
                         $('.member_checkbox').prop('checked', true);
                     }
                 });
+
+
+                $('.dataTables_filter input').attr('placeholder', 'Search here ...');
+                $('.dataTables_filter input').addClass('search-input');
+
+                $('#memberlist_filter')
+                    .addClass('search-box col-xxl-12 col-xl-12 col-lg-7 col-md-6 col-sm-12 col-12 d-flex gap-3');
+
+                const searchWrap = `
+                    <div class="filter-group">
+                        <label class="filter-label">Search</label>
+                    </div>
+                `;
+                @if(Auth::user()->role != 'Admin')
+                // Plan Filter Wrapper
+                const membersFilterWrap = `
+                    <div class="filter-group">
+                        <label class="filter-label">Member</label>
+                    </div>
+                `;    
+                @endif
+
+                 $('#memberlist_filter').prepend(searchWrap);
+                $('#memberlist_filter .filter-group:first')
+                    .append($('.dataTables_filter input'));
+
+                // Append wrappers
+                @if(Auth::user()->role != 'Admin')
+                $('#memberlist_filter').append(membersFilterWrap);
+                $('#memberlist_filter .filter-group:last').append($('#membersFilter').removeClass('d-none'));
+
+                @endif
+                $('#exportExcelBtn').removeClass('d-none').appendTo('#memberlist_filter');
+
         }
 
 
@@ -203,6 +258,11 @@
             $('.dataTables_filter input').attr('placeholder', 'Search here ...');
             $('#memberlist_filter').addClass('search-box col-xxl-4 col-xl-4 col-lg-7 col-md-6 col-sm-12 col-12');
             $('#memberlist_filter input').addClass('search-input');
+
+
+            $('#membersFilter').on('change', function () {
+                member_table.ajax.reload();
+            });
 
 
             $(document).on('click', '.delete-member-btn', function(e) {
@@ -247,7 +307,7 @@
                     }).get();
                     var selectedItemsString = selectedItems.join(',');
                     if (selectedItemsString == '') {
-                        return toastr.error('Data not selected');
+                        return toastr.error('Please choose user.');
                     }
                 
                 }
@@ -302,7 +362,7 @@
         });
     });
 
-            $(document).on('click', '#select_all', function(e) {
+        $(document).on('click', '#select_all', function(e) {
                 var isChecked = $(this).prop('checked');
                 $('.member_checkbox').prop('checked', isChecked);
             });
@@ -310,6 +370,102 @@
                 $('.error_top').hide();
                 $(this).find('textarea').val('').trigger('change');
             });
+        });
+
+        $(document).on('change', '.status-toggle', function () {
+
+            let checkbox = $(this);
+            let userId = checkbox.data('id');
+            let status = checkbox.is(':checked') ? 1 : 0;
+
+            let title = status === 1 ? 'Activate User?' : 'Deactivate User?';
+            let text  = status === 1
+                ? 'This user can receive messages.'
+                : 'This user cannot receive messages.';
+
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "{{ route('user-management.status') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId,
+                            status: status
+                        },
+                        success: function (res) {
+
+                            if (res.status) {
+                                Swal.fire('Success!', res.message, 'success');
+                            } else {
+                                Swal.fire('Error!', res.message, 'error');
+                                checkbox.prop('checked', !status);
+                            }
+
+                        },
+                        error: function () {
+                            Swal.fire('Error!', 'Something went wrong.', 'error');
+                            checkbox.prop('checked', !status);
+                        }
+                    });
+
+                } else {
+                    // Revert toggle if cancelled
+                    checkbox.prop('checked', !status);
+                }
+
+            });
+
+        });
+
+        $(document).on('click', '#exportExcelBtn', function () {
+
+            // Get filter values FIRST
+            var membersFilter = $('#membersFilter').val() || '';
+
+
+            // Check Select All checkbox
+            var isSelectAll = $('#select_all').is(':checked');
+
+            var selectedItemsString = '';
+
+            if (isSelectAll) {
+                // Special flag for backend
+                selectedItemsString = 'all';
+            } else {
+                // Collect checked rows from DataTable (all pages)
+                var selectedItems = $('#memberlist')
+                    .DataTable()
+                    .$('input[name="selected_items[]"]:checked')
+                    .map(function () {
+                        return $(this).val();
+                    }).get();
+
+                if (selectedItems.length === 0 && !membersFilter) {
+                    alert('No user selected or filters applied.');
+                    return;
+                }
+
+                selectedItemsString = selectedItems.join(',');
+            }
+
+            // Build export URL
+            var exportUrl = "{{ route('user.export.excel') }}"
+                + "?selectedItems=" + encodeURIComponent(selectedItemsString)
+                + "&members_filter=" + encodeURIComponent(membersFilter);
+            // Trigger Excel download
+            window.location.href = exportUrl;
         });
     </script>
 @endsection
