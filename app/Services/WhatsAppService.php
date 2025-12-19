@@ -40,22 +40,55 @@ class WhatsAppService
     public function sendMessage(string $to, string $message)
     {
 
-        $url = 'https://graph.facebook.com/v22.0/884086958126864/messages';
+        $url = 'https://graph.facebook.com/v22.0/2651531405206382/messages';
 
-        // Send the request to WhatsApp Graph API
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('WHATSAPP_ACCESS_TOKEN'),
             'Content-Type'  => 'application/json',
         ])->post($url, [
             'messaging_product' => 'whatsapp',
-            'recipient_type'    => 'individual',
-            'to'                => $to,
-            "type" => "template",
-            "template" => [
-                "name" => "hello_world",  // your APPROVED template name
-                "language" => ["code" => "en_US"]
+            'to' => $to, // Example: 919876543210
+            'type' => 'template',
+            'template' => [
+                'name' => 'dispatch_invoice_details_all',
+                'language' => [
+                    'code' => 'en'
+                ],
+                'components' => [
+                    [
+                        'type' => 'body',
+                        'parameters' => [
+                            ['type' => 'text', 'text' => 'ABC Traders'],          // {{1}}
+                            ['type' => 'text', 'text' => 'INV-2025-1045'],        // {{2}}
+                            ['type' => 'text', 'text' => '08-12-2025'],           // {{3}}
+                            ['type' => 'text', 'text' => 'Base Oil SN-500'],      // {{4}}
+                            ['type' => 'text', 'text' => '10,000'],              // {{5}}
+                            ['type' => 'text', 'text' => '₹7,50,000'],           // {{6}}
+                            ['type' => 'text', 'text' => 'Road Transport'],      // {{7}}
+                            ['type' => 'text', 'text' => 'GJ-01-AB-1234'],        // {{8}}
+                            ['type' => 'text', 'text' => 'LR-889945'],            // {{9}}
+                            ['type' => 'text', 'text' => '9876543210'],           // {{10}}
+                        ]
+                    ]
+                ]
             ]
         ]);
+
+
+        // $response = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . env('WHATSAPP_ACCESS_TOKEN'),
+        //     'Content-Type'  => 'application/json',
+        // ])->post($url, [
+        //     'messaging_product' => 'whatsapp',
+        //     'recipient_type'    => 'individual',
+        //     'to'                => $to, // Example: 919876543210
+        //     'type'              => 'text',
+        //     'text'              => [
+        //         'preview_url' => false,
+        //         'body' => "Hello World",
+        //     ],
+        // ]);
 
         // Return WhatsApp API response
         return response()->json($response->json(), $response->status());

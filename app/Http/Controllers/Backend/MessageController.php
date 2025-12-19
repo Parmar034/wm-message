@@ -44,23 +44,27 @@ class MessageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();  
 
+
+
         // 2️⃣ Build flat array
         $data = [];
         // $counter = 1;
 
         foreach ($messages as $message) {
             foreach ($message->userMembers as $member) {
+
                 $data[] = [
                     // 'id'           => $counter++,
                     'member_checkbox' => '<input type="checkbox" class="member_checkbox" name="selected_items[]" value="' . $member->id . '">',
                     'member_id'      => optional($member->user)->id, // users.id
+                    'message_status' =>  $member->pivot['status'], 
                     'user_member_id' => $member->id,      
                     'member_name'  => optional($member->user)->name,
                     'user_name'    => $member->member_name,
                     'phone'        => $member->phone,
                     'message_text' => $message->message,
                     'created_at'   => Carbon::parse($member->pivot->created_at)
-                                        ->format('d-m-Y'),
+                                        ->format('d-m-Y h:i A'),
                 ];
             }
         }

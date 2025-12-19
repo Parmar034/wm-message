@@ -20,7 +20,7 @@ class Message extends Model
         // return $this->belongsToMany(UserMember::class)
         //             ->withPivot('is_read')
         //             ->withTimestamps();
-        return $this->belongsToMany(UserMember::class, 'message_user', 'message_id', 'user_id')->withPivot(['created_at'])->withTimestamps();
+        return $this->belongsToMany(UserMember::class, 'message_user', 'message_id', 'user_id')->withPivot(['created_at','status'])->withTimestamps();
     }
 
     public $timestamps = true;

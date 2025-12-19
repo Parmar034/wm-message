@@ -54,6 +54,7 @@
                                                         <th>NAME</th>
                                                         <th>PHONE&nbsp;NUMBER</th>
                                                         <th>MESSAGE</th>
+                                                        <th>STATUS</th>
                                                         <th>CREATED&nbsp;DATE</th>
                                                     </tr>
                                                 </thead>
@@ -139,6 +140,18 @@
                 { data: 'user_name' },
                 { data: 'phone' },
                 { data: 'message_text' },
+                {
+                    data: 'message_status',
+                    render: function(data, type, row) {
+                        if (data === 'Success') {
+                            return '<span style="color:#29d75a;font-weight:bold;">' + data + '</span>';
+                        } else if (data === 'Failed') {
+                            return '<span style="color:#ca5252;font-weight:bold;">' + data + '</span>';
+                        } else {
+                            return data; // default color
+                        }
+                    }
+                },
                 { data: 'created_at' },
             ]
         });

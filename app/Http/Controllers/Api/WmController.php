@@ -31,7 +31,7 @@ class WmController extends Controller{
 	public function sendMessage(Request $request)
     {
 
-        $to = '+919712884659'; // your test number
+        $to = '+919974583968'; // your test number
         $message = 'Hello team, How are you?';
 
         $response = $this->whatsapp->sendMessage($to, $message);
